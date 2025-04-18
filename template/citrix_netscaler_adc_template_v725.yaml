@@ -1,0 +1,2136 @@
+zabbix_export:
+  version: '7.2'
+  template_groups:
+    - uuid: 36bff6c29af64692839d077febfc7079
+      name: 'Templates/Network devices'
+  templates:
+    - uuid: 127dca4e9a994284900fb19dd771a004
+      template: 'BB Citrix NetScaler ADC by SNMP'
+      name: 'BB Citrix NetScaler ADC by SNMP'
+      description: |
+        Focus on general NetScaler passive monitoring using SNMP
+        
+        Citrix NetScaler (ADC) is an appliance that load balances access to internal or external applications.
+        
+        Three NetScaler platforms are commonly used: VPX, MPX and SDX. The first, VPX, is virtual and can be deployed in many virtualized environments. It is useful for smaller environments and depends on the capacity and resources of the hypervisor in use. The MPX platform integrates software with Citrix hardware. In this case, the software is optimized for the specific hardware, which includes chips dedicated to SSL processing. SDX, on the other hand, is a virtualization appliance (XenServer) for NetScaler itself, enabling high throughput and application access scaling.
+        
+        To monitor this joint solution, this monitoring template allows you to quickly capture the key metrics of the load balancers in the environment. As the instances change, the monitoring is automatically updated. The metrics history also allows you to observe the behavior and trends of the key indicators.
+        
+        By Diasdm
+        https://github.com/diasdmhub/Citrix_NetScaler_ADC_Zabbix_Template
+      vendor:
+        name: diasdm
+        version: 7.2.5
+      groups:
+        - name: 'Templates/Network devices'
+      items:
+        - uuid: 247c3968e6224d2883ffc79b3a88d69f
+          name: 'HA Current State'
+          type: DEPENDENT
+          key: netscaler.haCurState
+          history: 7d
+          trends: '0'
+          description: |
+            State of the HA node, based on its health, in a high availability setup
+            
+            Possible values are:
+            - Up - Indicates that the node is accessible and can function as either a primary or secondary node
+            - Disabled - Indicates that the high availability status of the node has been manually disabled. Synchronization and propagation cannot take place between the peer nodes
+            - Init - Indicates that the node is in the process of becoming part of the high availability configuration
+            - Partialfail - Indicates that one of the high availability monitored interfaces has failed because of a card or link failure. This state triggers a failover
+            - Completefail - Indicates that all the interfaces of the node are unusable because the interfaces on which high availability monitoring is enabled are not connected or are manually disabled. This state triggers a failover
+            - Dumb - Indicates that the node is in listening mode, but it does not participate in high availability transitions or transfer configuration from the peer node. This is a configured value, not a statistic
+            - Partialfailssl - Indicates that the SSL card has failed. This state triggers a failover
+            - Routemonitorfail - Indicates that the route monitor has failed. This state triggers a failover
+          valuemap:
+            name: 'Netscaler HA Current State'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.24.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: curr_state
+        - uuid: 8ac112f22c564a87843499a7c3132575
+          name: 'HA Current Status'
+          type: DEPENDENT
+          key: netscaler.haCurStatus
+          history: 7d
+          trends: '0'
+          description: |
+            Whether a NetScaler ADC is configured for high availability
+            Possible values are YES and NO
+            If the value is NO, the high availability statistics are invalid
+            
+            Mapped as
+            YES - Active
+            NO - Inactive
+          valuemap:
+            name: 'Netscaler HA Current Status'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.23.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: cur_status
+        - uuid: b15a7959d38d45179c3f2009d1efe8d0
+          name: 'HA Peer ID'
+          type: DEPENDENT
+          key: netscaler.haPeerId
+          history: 7d
+          trends: '0'
+          description: 'The unique identifier to represent the failover peer Citrix ADC'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.1.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: peer_id
+        - uuid: 84cbf3088de94a85b1ee611822e3c2c1
+          name: 'HA Peer IP Address'
+          type: DEPENDENT
+          key: netscaler.haPeerIpAddress
+          history: 7d
+          value_type: CHAR
+          description: |
+            This represents the IP address for HA over IPv4 of the failover peer Citrix ADC
+            
+            For HA over IPv6 as well as IPv4, haPeerInetAddr will contain this information
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.2.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: peer_ip_address
+        - uuid: 9494d2bce4c04f0cb0737786806d036b
+          name: 'HA Peer State'
+          type: DEPENDENT
+          key: netscaler.haPeerState
+          history: 14d
+          trends: '0'
+          description: |
+            This represents the state of the failover peer NetScaler ADC
+            Whether it is Primary or Secondary
+          valuemap:
+            name: 'NetScaler HA Peer state'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.3.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: peer_state
+        - uuid: 3f3b93f3b9f941a1b89f752381d1bbe9
+          name: 'HA Time of Last State Transition'
+          type: DEPENDENT
+          key: netscaler.haTimeofLastStateTransition
+          history: 2d
+          trends: '0'
+          units: uptime
+          description: |
+            This represents the time since the NetScaler ADC underwent a state change from primary to secondary or vice-versa
+            
+            Timeticks in hundreds of a second converted to seconds
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.5.0
+                - '0'
+            - type: MULTIPLIER
+              parameters:
+                - '0.01'
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: transition_time
+        - uuid: a5110635a74f46138d2437bfb692efc1
+          name: 'HA Total State Transitions'
+          type: DEPENDENT
+          key: netscaler.haTotStateTransitions
+          history: 7d
+          trends: '0'
+          description: 'Total number of master state changes that the Citrix ADC has made from primary to secondary and vice-versa'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.23.4.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          master_item:
+            key: netscaler.walk.nsHighAvailabilityGroup
+          tags:
+            - tag: HA
+              value: transitions_state
+        - uuid: 9b7f0e44312b4f4ba22864532045cba0
+          name: 'Memory total'
+          type: DEPENDENT
+          key: netscaler.memSizeMB
+          history: 14d
+          trends: '0'
+          units: B
+          description: 'Total amount of system memory in megabytes and converted to bytes'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.41.4.0
+                - '0'
+            - type: MULTIPLIER
+              parameters:
+                - '1048576'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 12h
+          master_item:
+            key: netscaler.walk.nsResourceGroup
+          tags:
+            - tag: Memory
+              value: total
+        - uuid: 4101c1bf9bed4171ae1365aa7ec5f07f
+          name: 'Number of active CPUs'
+          type: DEPENDENT
+          key: netscaler.numCPUs
+          history: 7d
+          trends: '0'
+          description: 'The number of active CPUs for the host'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.41.3.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.nsResourceGroup
+          tags:
+            - tag: CPU
+              value: count
+        - uuid: 512bce05576845408aa40fce0e04aa87
+          name: 'CPU utilization'
+          type: DEPENDENT
+          key: netscaler.resCpuUsage
+          units: '%'
+          description: 'CPU utilization percentage'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.41.1.0
+                - '0'
+          master_item:
+            key: netscaler.walk.nsResourceGroup
+          tags:
+            - tag: CPU
+              value: utilization
+          triggers:
+            - uuid: 1618740a54ac4964b4e16a0bb7d6a2af
+              expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resCpuUsage,#5)>={$NS.SYS.CPU.CRIT}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resCpuUsage,#5)<{$NS.SYS.CPU.CRIT}-1'
+              name: 'CPU Utilization Critical'
+              event_name: 'CPU Utilization Critical - Greater than {$NS.SYS.CPU.CRIT}'
+              opdata: 'Current CPU Utilization: {ITEM.LASTVALUE}'
+              priority: HIGH
+              description: 'This trigger indicates that the CPU utilization is critical for the last 5 checks'
+              tags:
+                - tag: Utilization
+                  value: critical
+            - uuid: a3418dfecc634640ad5f9a7d53605e58
+              expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resCpuUsage,#5)>={$NS.SYS.CPU.WARN}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resCpuUsage,#5)<{$NS.SYS.CPU.WARN}-1'
+              name: 'CPU Utilization High'
+              event_name: 'CPU Utilization High - Greater than {$NS.SYS.CPU.WARN}'
+              opdata: 'Current CPU Utilization: {ITEM.LASTVALUE}'
+              priority: WARNING
+              description: 'This trigger indicates that the CPU utilization is high for the last 5 checks'
+              dependencies:
+                - name: 'CPU Utilization Critical'
+                  expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resCpuUsage,#5)>={$NS.SYS.CPU.CRIT}'
+                  recovery_expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resCpuUsage,#5)<{$NS.SYS.CPU.CRIT}-1'
+              tags:
+                - tag: Utilization
+                  value: high
+        - uuid: 97915219c50045d6b395bdaaa970ef62
+          name: 'Memory utilization'
+          type: DEPENDENT
+          key: netscaler.resMemUsage
+          units: '%'
+          description: 'Memory utilization percentage'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.41.2.0
+                - '0'
+          master_item:
+            key: netscaler.walk.nsResourceGroup
+          tags:
+            - tag: Memory
+              value: utilization
+          triggers:
+            - uuid: 1674d06a722a42aaa2fa5609b93ae57a
+              expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resMemUsage,#5)>={$NS.SYS.MEM.CRIT}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resMemUsage,#5)<{$NS.SYS.MEM.CRIT}-1'
+              name: 'Memory Utilization Critical'
+              event_name: 'Memory Utilization Critical - Greater than {$NS.SYS.MEM.CRIT}'
+              opdata: 'Current Memory Utilization: {ITEM.LASTVALUE}'
+              priority: HIGH
+              description: 'This trigger indicates that the CPU utilization is critical for the last 5 checks'
+              tags:
+                - tag: Utilization
+                  value: critical
+            - uuid: 0338fd66512249308cfd8252c24ce53c
+              expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resMemUsage,#5)>={$NS.SYS.MEM.WARN}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resMemUsage,#5)<{$NS.SYS.MEM.WARN}-1'
+              name: 'Memory Utilization High'
+              event_name: 'Memory Utilization High - Greater than {$NS.SYS.MEM.WARN}'
+              opdata: 'Current Memory Utilization: {ITEM.LASTVALUE}'
+              priority: WARNING
+              description: 'This trigger indicates that the memory utilization is high for the last 5 checks'
+              dependencies:
+                - name: 'Memory Utilization Critical'
+                  expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resMemUsage,#5)>={$NS.SYS.MEM.CRIT}'
+                  recovery_expression: 'avg(/BB Citrix NetScaler ADC by SNMP/netscaler.resMemUsage,#5)<{$NS.SYS.MEM.CRIT}-1'
+              tags:
+                - tag: Utilization
+                  value: high
+        - uuid: e7753554b96e4fb3b06db21aa75d27f3
+          name: 'System Description'
+          type: DEPENDENT
+          key: netscaler.sysBuildVersion
+          history: 2d
+          value_type: CHAR
+          description: 'This shows the version of the kernel build running on the NetScaler ADC'
+          inventory_link: OS_FULL
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.1.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: description
+        - uuid: bcaa58c7375d4bd2b56acfc81c734132
+          name: 'System Contact'
+          type: DEPENDENT
+          key: netscaler.sysContact
+          history: 2d
+          value_type: CHAR
+          description: |
+            The textual identification of the contact person for this managed node, together with information on how to contact this person
+            If no contact information is known, the value is the zero-length string
+          inventory_link: CONTACT
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.2.1.1.4.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: contact
+        - uuid: 443a66e48ab84935878820cdd148a5dc
+          name: 'System Hardware Serial Number'
+          type: DEPENDENT
+          key: netscaler.sysHardwareSerialNumber
+          history: 2d
+          value_type: CHAR
+          description: 'The serial number of the Citrix ADC system'
+          inventory_link: SERIALNO_A
+          valuemap:
+            name: 'NetScaler HA Mode'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.14.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: serial
+        - uuid: 88acbfc8adc34958887df68762796969
+          name: 'System HA Mode'
+          type: DEPENDENT
+          key: netscaler.sysHighAvailabilityMode
+          history: 14d
+          trends: '0'
+          description: |
+            This shows whether NetScaler ADC is in standalone mode or whether it is primary or secondary in case of failover mode
+            
+            Possible modes are
+            0 - Standalone
+            1 - Primary
+            2 - Secondary
+            3 - Unknown
+          inventory_link: DEPLOYMENT_STATUS
+          valuemap:
+            name: 'NetScaler HA Mode'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.6.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: HA
+              value: mode
+          triggers:
+            - uuid: 5426d3b7249a481aa7af09449d2babe1
+              expression: 'change(/BB Citrix NetScaler ADC by SNMP/netscaler.sysHighAvailabilityMode)=1'
+              name: 'HA Mode Changed'
+              event_name: 'HA Mode Changed to {ITEM.VALUE}'
+              opdata: 'Current mode: {ITEM.LASTVALUE} - Changed at: {?last(//netscaler.haTimeofLastStateTransition)}'
+              priority: WARNING
+              description: 'There has been an HA mode change on the host'
+              tags:
+                - tag: Mode
+                  value: changed
+        - uuid: d5bafe81cf704a2e9b06b8896e5bafca
+          name: 'System Location'
+          type: DEPENDENT
+          key: netscaler.sysLocation
+          history: 2d
+          value_type: CHAR
+          description: |
+            The physical location of this node (e.g., telephone closet, 3rd floor)
+            If the location is unknown, the value is the zero-length string
+          inventory_link: LOCATION
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.2.1.1.6.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: location
+        - uuid: 8057602fe1a24d4988a662b41e3006e6
+          name: 'System Model ID'
+          type: DEPENDENT
+          key: netscaler.sysModelId
+          history: 2d
+          value_type: CHAR
+          description: |
+            The model ID is populated if the system is such that it is license controlled
+            If the system does not support license based models, then the model id will be zero
+          inventory_link: MODEL
+          valuemap:
+            name: 'NetScaler HA Mode'
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.4.1.5951.4.1.1.16.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: model
+        - uuid: a81d81b6ab004c398e7a8c7772e3339f
+          name: 'System Name'
+          type: DEPENDENT
+          key: netscaler.sysName
+          history: 2d
+          value_type: CHAR
+          description: |
+            An administratively-assigned name for this managed node
+            By convention, this is the nodes fully-qualified domain name
+            If the name is unknown, the value is the zero-length string
+          inventory_link: NAME
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.2.1.1.5.0
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: name
+        - uuid: cb01789e747d4c72a6b1b623d7cf8ad1
+          name: 'System Uptime'
+          type: DEPENDENT
+          key: netscaler.sysUpTime
+          history: 7d
+          trends: '0'
+          units: uptime
+          description: |
+            The time (in hundredths of a second) since the network management portion of the system was last re-initialized
+            Value converted to seconds
+          preprocessing:
+            - type: SNMP_WALK_VALUE
+              parameters:
+                - 1.3.6.1.2.1.1.3.0
+                - '0'
+            - type: MULTIPLIER
+              parameters:
+                - '0.01'
+          master_item:
+            key: netscaler.walk.system
+          tags:
+            - tag: System
+              value: uptime
+          triggers:
+            - uuid: 66f602a9698f4b2785c930e6f7d620d4
+              expression: |
+                last(/BB Citrix NetScaler ADC by SNMP/netscaler.sysUpTime)>0
+                and
+                last(/BB Citrix NetScaler ADC by SNMP/netscaler.sysUpTime)<10m
+              name: 'Host has been restarted'
+              event_name: 'Host has been restarted (uptime less than 10m)'
+              opdata: 'Up for: {ITEM.LASTVALUE}'
+              priority: WARNING
+              description: 'The host uptime is less than 10 minutes'
+              dependencies:
+                - name: 'No SNMP data collection'
+                  expression: 'max(/BB Citrix NetScaler ADC by SNMP/zabbix[host,snmp,available],{$SNMP.TIMEOUT})=0'
+              tags:
+                - tag: Uptime
+                  value: low
+        - uuid: ec322221c4274b5191c0d19c89469e2d
+          name: 'NetScaler Walk Network Interfaces'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.2.1.2.2.1.2,1.3.6.1.2.1.2.2.1.3,1.3.6.1.2.1.2.2.1.7,1.3.6.1.2.1.2.2.1.8,1.3.6.1.2.1.2.2.1.13,1.3.6.1.2.1.2.2.1.14,1.3.6.1.2.1.2.2.1.19,1.3.6.1.2.1.2.2.1.20,1.3.6.1.2.1.31.1.1.1.1,1.3.6.1.2.1.31.1.1.1.6,1.3.6.1.2.1.31.1.1.1.10,1.3.6.1.2.1.31.1.1.1.15,1.3.6.1.2.1.31.1.1.1.18]'
+          key: netscaler.walk.ifTable
+          history: '0'
+          value_type: TEXT
+          description: 'This walk item collects interface statistics data from standard SNMP IF-MIB'
+          tags:
+            - tag: Walk
+              value: interfaces
+        - uuid: aa1990dcf5384380b2d8f4f128321276
+          name: 'NetScaler Walk HA'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.5951.4.1.1.23]'
+          key: netscaler.walk.nsHighAvailabilityGroup
+          history: '0'
+          value_type: TEXT
+          description: 'This walk item collects data about the High Availability feature in the Netscaler ADC'
+          tags:
+            - tag: Walk
+              value: HA
+        - uuid: d621978e8a1c4a0f90a34488c7d6a7dc
+          name: 'NetScaler Walk Resources'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.5951.4.1.1.41]'
+          key: netscaler.walk.nsResourceGroup
+          history: '0'
+          value_type: TEXT
+          description: 'This walk item collects data about the system resources in the NetScaler ADC'
+          tags:
+            - tag: Walk
+              value: resources
+        - uuid: f3702e85d4054960a4c6c4a9cc3a96b3
+          name: 'NetScaler Walk System Disk'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.5951.4.1.1.41.8]'
+          key: netscaler.walk.nsSysHealthDiskTable
+          history: '0'
+          value_type: TEXT
+          description: 'This walk item collects data about disks of the NetScaler ADC'
+          tags:
+            - tag: Walk
+              value: disk
+        - uuid: e49043f007cb44afad155dcf6cead4dc
+          name: 'NetScaler Walk System Health'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.5951.4.1.1.41.7]'
+          key: netscaler.walk.nsSysHealthTable
+          history: '0'
+          value_type: TEXT
+          description: 'This walk item collects data about the system health status of the NetScaler ADC, including sensors and sometimes disks'
+          tags:
+            - tag: Walk
+              value: health
+        - uuid: cb969ef3a7c8406896189ed06e8c5a73
+          name: 'NetScaler Walk System Information'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.2.1.1,1.3.6.1.4.1.5951.4.1.1.1,1.3.6.1.4.1.5951.4.1.1.6,1.3.6.1.4.1.5951.4.1.1.14,1.3.6.1.4.1.5951.4.1.1.16]'
+          key: netscaler.walk.system
+          history: '0'
+          value_type: TEXT
+          description: 'This walk item collects standard SNMP MIB-2 data about the system'
+          tags:
+            - tag: Walk
+              value: system
+        - uuid: 971d24e44e44491fabbd5bed2c6b08c7
+          name: 'NetScaler Walk vServer Health'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.5951.4.1.3.1.1.5,1.3.6.1.4.1.5951.4.1.3.1.1.59,1.3.6.1.4.1.5951.4.1.3.1.1.62,1.3.6.1.4.1.5951.4.1.3.1.1.2]'
+          key: 'netscaler.walk.vserver[health]'
+          history: '0'
+          value_type: TEXT
+          description: |
+            This walk item collects health data of vServers
+            
+            The vServer name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          tags:
+            - tag: Walk
+              value: vserver_health
+        - uuid: 73f4b1f255a54644bda15445f0d7cba4
+          name: 'NetScaler Walk vServer Requests'
+          type: SNMP_AGENT
+          snmp_oid: 'walk[1.3.6.1.4.1.5951.4.1.3.1.1.43,1.3.6.1.4.1.5951.4.1.3.1.1.44,1.3.6.1.4.1.5951.4.1.3.1.1.45,1.3.6.1.4.1.5951.4.1.3.1.1.59,1.3.6.1.4.1.5951.4.1.3.1.1.71]'
+          key: 'netscaler.walk.vserver[requests]'
+          history: '0'
+          value_type: TEXT
+          description: |
+            This walk item collects statistics data of vServers
+            
+            The vServer name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          tags:
+            - tag: Walk
+              value: vserver
+        - uuid: e66f4ebd594a4affbaf6f97afb039b83
+          name: 'SNMP Agent Availability'
+          type: INTERNAL
+          key: 'zabbix[host,snmp,available]'
+          description: |
+            Availability of SNMP checks on the host
+            The value of this item corresponds to availability icons in the host list
+            
+            Possible values are
+            0 - not available
+            1 - available
+            2 - unknown
+          valuemap:
+            name: 'SNMP Availability'
+          tags:
+            - tag: System
+              value: SNMP
+          triggers:
+            - uuid: 0e5e89114dd54db58bcc952c5640df0e
+              expression: 'max(/BB Citrix NetScaler ADC by SNMP/zabbix[host,snmp,available],{$SNMP.TIMEOUT})=0'
+              name: 'No SNMP data collection'
+              event_name: 'No SNMP data collection for the last {$SNMP.TIMEOUT}'
+              opdata: 'Current state: {ITEM.LASTVALUE}'
+              priority: HIGH
+              description: |
+                SNMP is not available for polling for the last {$SNMP.TIMEOUT}
+                Please check the device connectivity and SNMP settings
+              tags:
+                - tag: SNMP
+                  value: unavailable
+      discovery_rules:
+        - uuid: 74680af931554b23a954cf766f1cc887
+          name: 'Discovery Network interfaces'
+          type: DEPENDENT
+          key: discovery.netscaler.net.interfaces
+          filter:
+            conditions:
+              - macro: '{#NS.IF.ADMINSTATUS}'
+                value: '{$NS.IF.ADMINSTATUS.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#NS.IF.ALIAS}'
+                value: '{$NS.IF.ALIAS.MATCHES}'
+              - macro: '{#NS.IF.ALIAS}'
+                value: '{$NS.IF.ALIAS.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#NS.IF.DESCR}'
+                value: '{$NS.IF.DESCR.MATCHES}'
+              - macro: '{#NS.IF.DESCR}'
+                value: '{$NS.IF.DESCR.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#NS.IF.NAME}'
+                value: '{$NS.IF.NAME.MATCHES}'
+              - macro: '{#NS.IF.NAME}'
+                value: '{$NS.IF.NAME.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#NS.IF.OPERSTATUS}'
+                value: '{$NS.IF.OPERSTATUS.MATCHES}'
+              - macro: '{#NS.IF.OPERSTATUS}'
+                value: '{$NS.IF.OPERSTATUS.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#NS.IF.TYPE}'
+                value: '{$NS.IF.TYPE.MATCHES}'
+              - macro: '{#NS.IF.TYPE}'
+                value: '{$NS.IF.TYPE.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 5d
+          description: 'Discovers NetScaler device interfaces from standard IF-MIB'
+          item_prototypes:
+            - uuid: a61dc6067d9343c3b5267b78758f40bd
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Bits received'
+              type: DEPENDENT
+              key: 'netscaler.if.ifHCInOctets[{#NS.IF.NAME}]'
+              units: bps
+              description: |
+                IF-MIB
+                The total number of octets received on the interface, including framing characters
+                
+                Converted to bits
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.31.1.1.1.6.{#SNMPINDEX}'
+                    - '0'
+                - type: CHANGE_PER_SECOND
+                - type: MULTIPLIER
+                  parameters:
+                    - '8'
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: bits_received
+            - uuid: 07386d7c937f4667b70041e19ae81cc7
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Bits sent'
+              type: DEPENDENT
+              key: 'netscaler.if.ifHCOutOctets[{#NS.IF.NAME}]'
+              units: bps
+              description: |
+                IF-MIB
+                The total number of octets transmitted out of the interface, including framing characters
+                
+                Converted to bits
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.31.1.1.1.10.{#SNMPINDEX}'
+                    - '0'
+                - type: CHANGE_PER_SECOND
+                - type: MULTIPLIER
+                  parameters:
+                    - '8'
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: bits_sent
+            - uuid: c43991332122468fb4f79d6d9a9702f8
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Speed'
+              type: DEPENDENT
+              key: 'netscaler.if.ifHighSpeed[{#NS.IF.NAME}]'
+              history: 7d
+              trends: '0'
+              units: bps
+              description: |
+                IF-MIB
+                An estimate of the interfaces current bandwidth in units of 1000000 bits per second
+                
+                If this object reports a value of n, then the speed of the interface is somewhere in the range of n-500,000 to n+499,999
+                
+                For interfaces which do not vary in bandwidth or for those where no accurate estimation can be made, this object should contain the nominal bandwidth
+                For a sub-layer which has no concept of bandwidth, this object should be zero
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.31.1.1.1.15.{#SNMPINDEX}'
+                    - '0'
+                - type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 2h
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: speed
+            - uuid: 13ea70e734624a95909bf02f6ab9f669
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Inbound packets discarded'
+              type: DEPENDENT
+              key: 'netscaler.if.ifInDiscards[{#NS.IF.NAME}]'
+              description: |
+                IF-MIB
+                The number of inbound packets that were discarded, even though no errors were detected to prevent them from being delivered to a higher-layer protocol
+                
+                One possible reason for discarding such a packet could be to free up buffer space
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.2.2.1.13.{#SNMPINDEX}'
+                    - '0'
+                - type: CHANGE_PER_SECOND
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: in_discard
+            - uuid: c13b1c58e2374462ba18a2ebccaf40af
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Inbound packets with errors'
+              type: DEPENDENT
+              key: 'netscaler.if.ifInErrors[{#NS.IF.NAME}]'
+              description: |
+                IF-MIB
+                For packet-oriented interfaces, the number of inbound packets that contained errors that prevented them from being delivered to a higher-layer protocol
+                
+                For character-oriented or fixed-length interfaces, the number of inbound transmission units that contained errors that prevented them from being delivered to a higher-level protocol
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.2.2.1.14.{#SNMPINDEX}'
+                    - '0'
+                - type: CHANGE_PER_SECOND
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: in_error
+            - uuid: c5bfb773780d4b759e84b7b59aa688b0
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Operational status'
+              type: DEPENDENT
+              key: 'netscaler.if.ifOperStatus[{#NS.IF.NAME}]'
+              trends: '0'
+              description: |
+                IF-MIB
+                The current operational state of the interface
+                
+                - testing (3) state indicates that no operational packet scan be passed
+                - If ifAdminStatus is down (2) then ifOperStatus should be down (2)
+                - If ifAdminStatus is changed to up (1) then ifOperStatus should change to up (1) if the interface is ready to transmit and receive network traffic
+                - It should change to dormant (5) if the interface is waiting for external actions (such as a serial line waiting for an incoming connection)
+                - It should remain in the down (2) state if and only if there is a fault that prevents it from going to the up (1) state
+                - It should remain in the notPresent(6) state if the interface has missing (typically, hardware) components
+              valuemap:
+                name: 'IF-MIB::ifOperStatus'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.2.2.1.8.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 1h
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: oper_status
+              trigger_prototypes:
+                - uuid: 4fcac9806ecf4f58b04b4c46c04ab04d
+                  expression: |
+                    {$NS.IF.CONTROL:"{#NS.IF.NAME}"}=1
+                    and
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])=2
+                    and
+                    change(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])>=1
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: |
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])<>2
+                    or
+                    {$NS.IF.CONTROL:"{#NS.IF.NAME}"}=0
+                  name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Link down'
+                  opdata: 'Current state: {ITEM.LASTVALUE1}'
+                  priority: AVERAGE
+                  description: |
+                    This trigger is true when
+                    1 - The operations status is down and
+                    2 - The operational status was up to (1) sometime before
+                    3 - Macro {$IFCONTROL:"{#IFNAME}"} is set to 1
+                    
+                    This macro marks this interface as not important if set to 0, so no new trigger will be fired if this interface is down
+                    
+                    If closed manually, it will not fire again on the next poll because of change function
+                  manual_close: 'YES'
+                  tags:
+                    - tag: Operation
+                      value: down
+            - uuid: 0491bd2a9447468db76af3b1e201c59a
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Outbound packets discarded'
+              type: DEPENDENT
+              key: 'netscaler.if.ifOutDiscards[{#NS.IF.NAME}]'
+              trends: 180d
+              description: |
+                IF-MIB
+                The number of outbound packets that were discarded, even though no errors were detected to prevent them from being delivered to a higher-layer protocol
+                
+                One possible reason for discarding such a packet could be to free up buffer space
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.2.2.1.19.{#SNMPINDEX}'
+                    - '0'
+                - type: CHANGE_PER_SECOND
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: out_discarded
+            - uuid: faf91ec1a7074531b71b88958163421a
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Outbound packets with errors'
+              type: DEPENDENT
+              key: 'netscaler.if.ifOutErrors[{#NS.IF.NAME}]'
+              trends: 180d
+              description: |
+                IF-MIB
+                For packet-oriented interfaces, the number of outbound packets that failed to be transmitted due to errors
+                
+                For character-oriented or fixed-length interfaces, the number of outbound transmission units that could not be transmitted due to errors
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.2.1.2.2.1.20.{#SNMPINDEX}'
+                    - '0'
+                - type: CHANGE_PER_SECOND
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.ifTable
+              tags:
+                - tag: Interface
+                  value: '{#NS.IF.NAME}'
+                - tag: '{#NS.IF.NAME}'
+                  value: out_error
+          trigger_prototypes:
+            - uuid: 6e2b04f4875540919f8338882ab64f24
+              expression: |
+                (
+                  avg(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHCInOctets[{#NS.IF.NAME}],15m)
+                  >
+                  last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHighSpeed[{#NS.IF.NAME}])
+                  *
+                  (
+                    {$NS.IF.UTIL.MAX:"{#NS.IF.NAME}"}/100
+                  )
+                  or
+                  avg(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHCOutOctets[{#NS.IF.NAME}],15m)
+                  >
+                  last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHighSpeed[{#NS.IF.NAME}])
+                  *
+                  (
+                    {$NS.IF.UTIL.MAX:"{#NS.IF.NAME}"}/100
+                  )
+                )
+                and
+                last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHighSpeed[{#NS.IF.NAME}])>0
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: |
+                avg(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHCInOctets[{#NS.IF.NAME}],15m)
+                <
+                last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHighSpeed[{#NS.IF.NAME}])
+                *
+                (
+                  (
+                    {$NS.IF.UTIL.MAX:"{#NS.IF.NAME}"}-3
+                  )
+                  /100
+                )
+                and
+                avg(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHCOutOctets[{#NS.IF.NAME}],15m)
+                <
+                last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifHighSpeed[{#NS.IF.NAME}])
+                *
+                (
+                  (
+                    {$NS.IF.UTIL.MAX:"{#NS.IF.NAME}"}-3
+                  )
+                  /100
+                )
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - High bandwidth usage'
+              event_name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - High bandwidth usage (higher than {$NS.IF.UTIL.MAX:"{#NS.IF.NAME}"}%)'
+              opdata: 'In: {ITEM.LASTVALUE1} - Out: {ITEM.LASTVALUE3} - Speed: {ITEM.LASTVALUE2}'
+              priority: WARNING
+              description: 'Utilization of the network interface is close to its estimated maximum bandwidth'
+              dependencies:
+                - name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Link down'
+                  expression: |
+                    {$NS.IF.CONTROL:"{#NS.IF.NAME}"}=1
+                    and
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])=2
+                    and
+                    change(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])>=1
+                  recovery_expression: |
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])<>2
+                    or
+                    {$NS.IF.CONTROL:"{#NS.IF.NAME}"}=0
+              tags:
+                - tag: Bandwidth
+                  value: high
+            - uuid: 5a5a0dea1cb94674bb7dfc3156ab04fe
+              expression: |
+                min(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifInErrors[{#NS.IF.NAME}],5m)
+                >
+                {$NS.IF.ERROR.WARN:"{#NS.IF.NAME}"}
+                or
+                min(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOutErrors[{#NS.IF.NAME}],5m)
+                >
+                {$NS.IF.ERROR.WARN:"{#NS.IF.NAME}"}
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: |
+                max(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifInErrors[{#NS.IF.NAME}],5m)
+                <=
+                {$NS.IF.DROP.WARN:"{#NS.IF.NAME}"}*0.8
+                and
+                max(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOutErrors[{#NS.IF.NAME}],5m)
+                <=
+                {$NS.IF.DROP.WARN:"{#NS.IF.NAME}"}*0.8
+              name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - High error rate'
+              event_name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - High Drop Rate (higher than {$NS.IF.ERROR.WARN:"{#NS.IF.NAME}"} for 5m)'
+              opdata: 'Errors in: {ITEM.LASTVALUE1} - Erros out: {ITEM.LASTVALUE2}'
+              priority: WARNING
+              description: |
+                The network interface has a high error rate
+                
+                The event recovers when the drop rate is less or equal to 80% of the threshold
+              dependencies:
+                - name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - Link down'
+                  expression: |
+                    {$NS.IF.CONTROL:"{#NS.IF.NAME}"}=1
+                    and
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])=2
+                    and
+                    change(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])>=1
+                  recovery_expression: |
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOperStatus[{#NS.IF.NAME}])<>2
+                    or
+                    {$NS.IF.CONTROL:"{#NS.IF.NAME}"}=0
+              tags:
+                - tag: Error
+                  value: high
+          master_item:
+            key: netscaler.walk.ifTable
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.IF.OPERSTATUS}'
+                - 1.3.6.1.2.1.2.2.1.8
+                - '0'
+                - '{#NS.IF.ADMINSTATUS}'
+                - 1.3.6.1.2.1.2.2.1.7
+                - '0'
+                - '{#NS.IF.ALIAS}'
+                - 1.3.6.1.2.1.31.1.1.1.18
+                - '0'
+                - '{#NS.IF.NAME}'
+                - 1.3.6.1.2.1.31.1.1.1.1
+                - '0'
+                - '{#NS.IF.DESCR}'
+                - 1.3.6.1.2.1.2.2.1.2
+                - '0'
+                - '{#NS.IF.TYPE}'
+                - 1.3.6.1.2.1.2.2.1.3
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+        - uuid: c6977f1ab7274c298037a3a3a447ce12
+          name: 'Discovery System Disk'
+          type: DEPENDENT
+          key: discovery.netscaler.system.disk
+          lifetime: 5d
+          description: |
+            Discovers system partitions
+            Netscaler SNMP table calls it "disk"
+            
+            The volume name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          item_prototypes:
+            - uuid: ee5f68e8fcf04da4a33aeaf7c960fd77
+              name: 'Filesystem Available - {#NS.SYS.DISK.NAME}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.disk.avail[{#NS.SYS.DISK.NAME}]'
+              history: 30d
+              trends: 180d
+              units: B
+              description: |
+                The "{#NS.SYS.DISK.NAME}" partition available space
+                Value in MB converted to bytes
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.8.1.3.{#SNMPINDEX}'
+                    - '0'
+                - type: MULTIPLIER
+                  parameters:
+                    - '1048576'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.nsSysHealthDiskTable
+              tags:
+                - tag: Filesystem
+                  value: available
+                - tag: Filesystem
+                  value: '{#NS.SYS.DISK.NAME}'
+            - uuid: 80053b47ca214a8196b1e95b5caf6882
+              name: 'Filesystem Size - {#NS.SYS.DISK.NAME}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.disk.size[{#NS.SYS.DISK.NAME}]'
+              history: 7d
+              trends: '0'
+              units: B
+              description: |
+                The "{#NS.SYS.DISK.NAME}" partition total size
+                Value in MB converted to bytes
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.8.1.2.{#SNMPINDEX}'
+                    - '0'
+                - type: MULTIPLIER
+                  parameters:
+                    - '1048576'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 1d
+              master_item:
+                key: netscaler.walk.nsSysHealthDiskTable
+              tags:
+                - tag: Filesystem
+                  value: size
+                - tag: Filesystem
+                  value: '{#NS.SYS.DISK.NAME}'
+            - uuid: 8dadb5002a674090b8771e78d365e1b5
+              name: 'Filesystem Used - {#NS.SYS.DISK.NAME}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.disk.used[{#NS.SYS.DISK.NAME}]'
+              history: 30d
+              trends: 180d
+              units: B
+              description: |
+                The "{#NS.SYS.DISK.NAME}" partition used space
+                Value in MB converted to bytes
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.8.1.4.{#SNMPINDEX}'
+                    - '0'
+                - type: MULTIPLIER
+                  parameters:
+                    - '1048576'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.nsSysHealthDiskTable
+              tags:
+                - tag: Filesystem
+                  value: used
+                - tag: Filesystem
+                  value: '{#NS.SYS.DISK.NAME}'
+            - uuid: 0e13e18e737d401d8f77fcb9e79f3dae
+              name: 'Filesystem Utilization - {#NS.SYS.DISK.NAME}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.disk.util[{#NS.SYS.DISK.NAME}]'
+              history: 30d
+              units: '%'
+              description: 'The "{#NS.SYS.DISK.NAME}" partition utilization percentage'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.8.1.5.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.nsSysHealthDiskTable
+              tags:
+                - tag: Filesystem
+                  value: utilization
+                - tag: Filesystem
+                  value: '{#NS.SYS.DISK.NAME}'
+              trigger_prototypes:
+                - uuid: 433762267960473cb3325174ed1a51e2
+                  expression: 'min(/BB Citrix NetScaler ADC by SNMP/netscaler.sysHealth.disk.util[{#NS.SYS.DISK.NAME}],#3)>={$NS.SYS.DISK.UTIL.WARN}'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'min(/BB Citrix NetScaler ADC by SNMP/netscaler.sysHealth.disk.util[{#NS.SYS.DISK.NAME}],#3)<={$NS.SYS.DISK.UTIL.WARN}-5'
+                  name: 'High Filesystem Utilization - {#NS.SYS.DISK.NAME}'
+                  event_name: 'High Filesystem Utilization for {#NS.SYS.DISK.NAME} greater than {$NS.SYS.DISK.UTIL.WARN}%'
+                  opdata: 'Current utilization: {ITEM.LASTVALUE}'
+                  priority: HIGH
+                  description: 'Indicates that the filesystem has a high utilization rate and is running out of free space'
+                  tags:
+                    - tag: Utilization
+                      value: high
+          master_item:
+            key: netscaler.walk.nsSysHealthDiskTable
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.SYS.DISK.NAME}'
+                - .1.3.6.1.4.1.5951.4.1.1.41.8.1.1
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+        - uuid: cf572b2357af4a61828ae3d0a3987c30
+          name: 'Discovery System Health Fan'
+          type: DEPENDENT
+          key: 'discovery.netscaler.system.health[fan]'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#NS.SYS.HEALTH.NAME}'
+                value: '[Ff][Aa][Nn]'
+          lifetime: 5d
+          description: |
+            Discovers system fans
+            
+            If other sensors are included in the system health table, they are filtered out from this discovery.
+            
+            The sensor name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          item_prototypes:
+            - uuid: 0ea97ce74b464850bfdad1eeaec57275
+              name: 'Fan {{#NS.SYS.HEALTH.NAME}.regsub("(.*)[Ff]an(\d*).*","\2 Speed - \1")}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.fan[{#NS.SYS.HEALTH.NAME}]'
+              history: 20d
+              trends: 90d
+              units: rpm
+              description: |
+                The health counter value for the fan speed
+                
+                The value will always be zero if the associated pin is not connected to the health monitoring chip
+                
+                Acceptable range is 3000 through 6000 RPM
+                
+                The lower speed limit is configured by using the SNMP set alarm FAN-SPEED-LOW command
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.7.1.2.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 10m
+              master_item:
+                key: netscaler.walk.nsSysHealthTable
+              tags:
+                - tag: Fan
+                  value: '{#NS.SYS.HEALTH.NAME}'
+                - tag: Sensor
+                  value: fan
+          master_item:
+            key: netscaler.walk.nsSysHealthTable
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.SYS.HEALTH.NAME}'
+                - .1.3.6.1.4.1.5951.4.1.1.41.7.1.1
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+        - uuid: d98cb316a2c94b3bad23804982d78aa9
+          name: 'Discovery System Health Temperature'
+          type: DEPENDENT
+          key: 'discovery.netscaler.system.health[temperature]'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#NS.SYS.HEALTH.NAME}'
+                value: '[Tt]emperature'
+          lifetime: 5d
+          description: |
+            Discovers system temperature sensors
+            
+            If other sensors are included in the system health table, they are filtered out from this discovery
+            
+            The sensor name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          item_prototypes:
+            - uuid: 35f21235d9524ce5be38a7c8bdf10c83
+              name: 'Temperature {{#NS.SYS.HEALTH.NAME}.regsub("(.*)[Tt]emperature(\d*)(.*)","- \1 \2 \3")}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.temp[{#NS.SYS.HEALTH.NAME}]'
+              history: 20d
+              trends: 90d
+              units: ºC
+              description: |
+                The health counter value for the internal chip temperature sensor "{#NS.SYS.HEALTH.NAME}"
+                
+                The value will always be zero if the associated pin is not connected to the health monitoring chip
+                
+                The high temperature limit for traps is configured by using the SNMP set alarm TEMPERATURE-HIGH command
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.7.1.2.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 2m
+              master_item:
+                key: netscaler.walk.nsSysHealthTable
+              tags:
+                - tag: Sensor
+                  value: temperature
+                - tag: Temperature
+                  value: '{#NS.SYS.HEALTH.NAME}'
+              trigger_prototypes:
+                - uuid: 33a50f567987450e8312300118477119
+                  expression: 'min(/BB Citrix NetScaler ADC by SNMP/netscaler.sysHealth.temp[{#NS.SYS.HEALTH.NAME}],#3)>{$NS.SYS.TEMP.WARN}'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'min(/BB Citrix NetScaler ADC by SNMP/netscaler.sysHealth.temp[{#NS.SYS.HEALTH.NAME}],#3)<={$NS.SYS.TEMP.WARN}-2'
+                  name: 'High Temperature for {{#NS.SYS.HEALTH.NAME}.regsub("(.*)[Tt]emperature(\d*)(.*)","- \1 \2 \3")}'
+                  opdata: 'Current temp: {ITEM.LASTVALUE}'
+                  priority: WARNING
+                  description: |
+                    Indicates that the module has a high temperature
+                    
+                    The trigger resolves the event when the temperature is 2 degrees below the macro threshold
+                  tags:
+                    - tag: Temperature
+                      value: high
+          master_item:
+            key: netscaler.walk.nsSysHealthTable
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.SYS.HEALTH.NAME}'
+                - .1.3.6.1.4.1.5951.4.1.1.41.7.1.1
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+        - uuid: a8338c83f90f4f0a8839e0a2c6be61c6
+          name: 'Discovery System Health Voltage'
+          type: DEPENDENT
+          key: 'discovery.netscaler.system.health[voltage]'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#NS.SYS.HEALTH.NAME}'
+                value: '[Vv]oltage'
+          lifetime: 5d
+          description: |
+            Discovers system voltage sensors
+            
+            If other sensors are included in the system health table, they are filtered out from this discovery
+            
+            The sensor name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          item_prototypes:
+            - uuid: 073815b4ebe24e77adaa69d4e6078aff
+              name: 'Voltage {{#NS.SYS.HEALTH.NAME}.regsub("(.*)[Vv]oltage(\d*)(.*)","- \1 \2 \3")}'
+              type: DEPENDENT
+              key: 'netscaler.sysHealth.volt[{#NS.SYS.HEALTH.NAME}]'
+              history: 20d
+              value_type: FLOAT
+              trends: 90d
+              units: V
+              description: |
+                The health counter value for the voltage sensor "{#NS.SYS.HEALTH.NAME}"
+                
+                For CPU, the acceptable range is typically 1.080 through 1.650 volts
+                For 3.3V supply, acceptable range is typically 2.970 through 3.630 volts
+                For 5V supply, acceptable range is typically 4.50 through 5.50 volts
+                For 12V supply, acceptable range is typically 10.80 through 13.20 volts
+                
+                Some values will be zero if the associated pin is not connected to the health monitoring chip or component the component is absent
+                
+                The low and high voltage limits are configured by using the SNMP set alarm VOLTAGE-LOW and VOLTAGE-HIGH commands respectively
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.1.41.7.1.2.{#SNMPINDEX}'
+                    - '0'
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 5m
+              master_item:
+                key: netscaler.walk.nsSysHealthTable
+              tags:
+                - tag: Sensor
+                  value: voltage
+                - tag: Voltage
+                  value: '{#NS.SYS.HEALTH.NAME}'
+          master_item:
+            key: netscaler.walk.nsSysHealthTable
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.SYS.HEALTH.NAME}'
+                - .1.3.6.1.4.1.5951.4.1.1.41.7.1.1
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+        - uuid: 325cf110acb34b4bb1966d9601eb663f
+          name: 'Discovery vServer Health'
+          type: DEPENDENT
+          key: 'discovery.netscaler.vservers[health]'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#NS.VSERVER.FULL.NAME}'
+                value: '{$NS.VSERVER.NAME.MATCHES}'
+              - macro: '{#NS.VSERVER.FULL.NAME}'
+                value: '{$NS.VSERVER.NAME.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 1d
+          description: |
+            Discover vServer names for health data
+            
+            The vServer name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          item_prototypes:
+            - uuid: 215b97530483478aa26cb4f781e97662
+              name: '{#NS.VSERVER.FULL.NAME} - vServer Health'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrHealth[{#NS.VSERVER.FULL.NAME}]'
+              trends: 180d
+              units: '%'
+              description: 'The percentage of UP services bound to this vServer'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.62.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 1h
+              master_item:
+                key: 'netscaler.walk.vserver[health]'
+              tags:
+                - tag: vServer
+                  value: health
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+            - uuid: 56232c803dbe4674b65031db0e0dda1b
+              name: '{#NS.VSERVER.FULL.NAME} - vServer IP'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrIpAddress[{#NS.VSERVER.FULL.NAME}]'
+              history: 7d
+              value_type: CHAR
+              description: 'IP address of the vServer'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.2.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 1d
+              master_item:
+                key: 'netscaler.walk.vserver[health]'
+              tags:
+                - tag: vServer
+                  value: IP
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+            - uuid: f8a246d3395d444d932daf72f2e28270
+              name: '{#NS.VSERVER.FULL.NAME} - vServer State'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrState[{#NS.VSERVER.FULL.NAME}]'
+              history: 14d
+              trends: '0'
+              description: |
+                vServer state
+                
+                1 - Down
+                2 - Unknown
+                3 - Busy
+                4 - Out of Service
+                5 - Transition Out of Service
+                7 - Up
+                8 - Down When going Out of Service
+              valuemap:
+                name: 'Netscaler vServer State'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.5.{#SNMPINDEX}'
+                    - '0'
+                - type: DISCARD_UNCHANGED_HEARTBEAT
+                  parameters:
+                    - 1h
+              master_item:
+                key: 'netscaler.walk.vserver[health]'
+              tags:
+                - tag: vServer
+                  value: state
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+          master_item:
+            key: 'netscaler.walk.vserver[health]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.VSERVER.STATE}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.5
+                - '0'
+                - '{#NS.VSERVER.FULL.NAME}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.59
+                - '0'
+                - '{#NS.VSERVER.HEALTH}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.62
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+        - uuid: b575f4564b9b4ee7aff547c435f548e8
+          name: 'Discovery vServer Requests'
+          type: DEPENDENT
+          key: 'discovery.netscaler.vservers[requests]'
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#NS.VSERVER.FULL.NAME}'
+                value: '{$NS.VSERVER.NAME.MATCHES}'
+              - macro: '{#NS.VSERVER.FULL.NAME}'
+                value: '{$NS.VSERVER.NAME.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 1d
+          description: |
+            Discovers vServer names for statistics data
+            
+            The vServer name OID is followed by an OCTET STRING index.
+            It is represented as a series of integers separated by periods, including the string length followed by the decimal representation of each ASCII character in the string.
+            The string length representation is limited to 31.
+          item_prototypes:
+            - uuid: 05e341b2d0ea448b99c433a8a5fa42fb
+              name: '{#NS.VSERVER.FULL.NAME} - vServer Client Established Connections'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrEstablishedConn[{#NS.VSERVER.FULL.NAME}]'
+              description: 'Number of client connections in established state'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.71.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'netscaler.walk.vserver[requests]'
+              tags:
+                - tag: vServer
+                  value: cli_conn
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+              trigger_prototypes:
+                - uuid: e47a68abc1104e1fb4cf31ba88d45286
+                  expression: |
+                    trendstl(/BB Citrix NetScaler ADC by SNMP/netscaler.vserver.vsvrEstablishedConn[{#NS.VSERVER.FULL.NAME}],7d:now/h,1h,2h)>=3
+                    and
+                    last(/BB Citrix NetScaler ADC by SNMP/netscaler.vserver.vsvrEstablishedConn[{#NS.VSERVER.FULL.NAME}],#1)>10
+                  name: '{#NS.VSERVER.FULL.NAME} - vServer Connections Abnormal'
+                  event_name: '{#NS.VSERVER.FULL.NAME} - Abnormal Rize in vServer Connections'
+                  opdata: 'Current Connections: {ITEM.LASTVALUE}'
+                  discover: NO_DISCOVER
+                  priority: WARNING
+                  description: 'This trigger should indicate when the amount of recent connections has anomalies when compared to the last 7d hour baseline'
+                  tags:
+                    - tag: Cli_conn
+                      value: abnormal
+            - uuid: b7d27a8dd9e244c9ba0df9e2af4c9198
+              name: '{#NS.VSERVER.FULL.NAME} - vServer Request Rate'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrRequestRate[{#NS.VSERVER.FULL.NAME}]'
+              units: r/s
+              description: 'Request rate in requests per second for this service or virtual server'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.43.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'netscaler.walk.vserver[requests]'
+              tags:
+                - tag: vServer
+                  value: req_rate
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+            - uuid: 4781033f451f44b89b7f95c4dec44e18
+              name: '{#NS.VSERVER.FULL.NAME} - vServer Request Rate in Bytes'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrRxBytesRate[{#NS.VSERVER.FULL.NAME}]'
+              units: B/s
+              description: 'Request rate in bytes per second fot this service or virtual server'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.44.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'netscaler.walk.vserver[requests]'
+              tags:
+                - tag: vServer
+                  value: req_rate_bytes
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+            - uuid: 60196062dd3f4604a65e5a66f7c6c3b5
+              name: '{#NS.VSERVER.FULL.NAME} - vServer Response Rate in Bytes'
+              type: DEPENDENT
+              key: 'netscaler.vserver.vsvrTxBytesRate[{#NS.VSERVER.FULL.NAME}]'
+              units: B/s
+              description: 'Response rate in bytes per second for this service or virtual server'
+              preprocessing:
+                - type: SNMP_WALK_VALUE
+                  parameters:
+                    - '1.3.6.1.4.1.5951.4.1.3.1.1.45.{#SNMPINDEX}'
+                    - '0'
+              master_item:
+                key: 'netscaler.walk.vserver[requests]'
+              tags:
+                - tag: vServer
+                  value: resp_rate_bytes
+                - tag: vServer
+                  value: '{#NS.VSERVER.FULL.NAME}'
+          master_item:
+            key: 'netscaler.walk.vserver[requests]'
+          preprocessing:
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - '{#NS.VSERVER.CONN.CLI}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.7
+                - '0'
+                - '{#NS.VSERVER.CONN.SRV}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.8
+                - '0'
+                - '{#NS.VSERVER.SVC.DOWN}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.37
+                - '0'
+                - '{#NS.VSERVER.SVC.UNKNOWN}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.38
+                - '0'
+                - '{#NS.VSERVER.SVC.OUTOFSVC}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.39
+                - '0'
+                - '{#NS.VSERVER.SVC.TROUTSVC}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.40
+                - '0'
+                - '{#NS.VSERVER.SVC.UP}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.41
+                - '0'
+                - '{#NS.VSERVER.REQ.RATE}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.43
+                - '0'
+                - '{#NS.VSERVER.BYTE.RXRATE}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.44
+                - '0'
+                - '{#NS.VSERVER.BYTE.TXRATE}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.45
+                - '0'
+                - '{#NS.VSERVER.SYN.FLOODRATE}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.46
+                - '0'
+                - '{#NS.VSERVER.TOTAL.CLIENTS}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.56
+                - '0'
+                - '{#NS.VSERVER.FULL.NAME}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.59
+                - '0'
+                - '{#NS.VSERVER.HEALTH}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.62
+                - '0'
+                - '{#NS.VSERVER.TOTAL.SERVERS}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.65
+                - '0'
+                - '{#NS.VSERVER.CONN.STAB}'
+                - 1.3.6.1.4.1.5951.4.1.3.1.1.71
+                - '0'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+      tags:
+        - tag: Citrix
+          value: netscaler
+      macros:
+        - macro: '{$NS.IF.ADMINSTATUS.NOT_MATCHES}'
+          value: ^2$
+          description: 'Filters out network interfaces that matches this regex. Ignore interfaces with administrative status down (2) by default'
+        - macro: '{$NS.IF.ALIAS.MATCHES}'
+          value: '.*'
+          description: 'Filters only network interface aliases that match this regex'
+        - macro: '{$NS.IF.ALIAS.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Filters out network interface aliases that match this regex'
+        - macro: '{$NS.IF.CONTROL}'
+          value: '1'
+          description: 'Link status trigger will be fired only for interfaces where the context macro equals 1'
+        - macro: '{$NS.IF.DESCR.MATCHES}'
+          value: '.*'
+          description: 'Filters only network interface descriptions that match this regex'
+        - macro: '{$NS.IF.DESCR.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Filters out network interface descriptions that match this regex'
+        - macro: '{$NS.IF.ERROR.WARN}'
+          value: '10'
+          description: 'Warning threshold of packet drops. Can be used with interface name as context'
+        - macro: '{$NS.IF.NAME.MATCHES}'
+          value: '.*'
+          description: 'Filters only network interface names that match this regex'
+        - macro: '{$NS.IF.NAME.NOT_MATCHES}'
+          value: '(^Software Loopback Interface|^NULL[0-9.]*$|^[Ll]o[0-9.]*$|^[Ss]ystem$|^Nu[0-9.]*$|^veth[0-9a-z]+$|docker[0-9]+|br-[a-z0-9]{12})'
+          description: 'Filters out network interface names that match this regex. Filters out loopbacks, nulls, docker veth links and docker0 bridge by default'
+        - macro: '{$NS.IF.OPERSTATUS.MATCHES}'
+          value: '.*'
+          description: 'Filters only network interfaces with operational status that match this regex'
+        - macro: '{$NS.IF.OPERSTATUS.NOT_MATCHES}'
+          value: ^6$
+          description: 'Filters out network interfaces with operational status that match this regex. Ignore status notPresent (6) by default'
+        - macro: '{$NS.IF.TYPE.MATCHES}'
+          value: '.*'
+          description: 'Filters only network interface types that match this regex'
+        - macro: '{$NS.IF.TYPE.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Filters out network interface types that match this regex'
+        - macro: '{$NS.IF.UTIL.MAX}'
+          value: '90'
+          description: 'Interface threshold for bandwidth usage trigger. Can be used with interface name as context.'
+        - macro: '{$NS.SYS.CPU.CRIT}'
+          value: '95'
+          description: 'Critical threshold for high CPU utilization percentage'
+        - macro: '{$NS.SYS.CPU.WARN}'
+          value: '80'
+          description: 'Warning threshold for high CPU utilization percentage'
+        - macro: '{$NS.SYS.DISK.UTIL.WARN}'
+          value: '90'
+          description: 'Disk utilization warning threshold in percentage'
+        - macro: '{$NS.SYS.MEM.CRIT}'
+          value: '95'
+          description: 'Critical threshold for high memory utilization percentage'
+        - macro: '{$NS.SYS.MEM.WARN}'
+          value: '80'
+          description: 'Warning threshold for high memory utilization percentage'
+        - macro: '{$NS.SYS.TEMP.WARN}'
+          value: '65'
+          description: 'Temperature warning threshold in degree Celsius'
+        - macro: '{$NS.VSERVER.NAME.MATCHES}'
+          value: '.*'
+          description: 'Filters out and discovers only vServer names that match this regex'
+        - macro: '{$NS.VSERVER.NAME.NOT_MATCHES}'
+          value: '(?i)test'
+          description: 'Filters out and does not discover vServer names that match this regex'
+        - macro: '{$SNMP.TIMEOUT}'
+          value: 5m
+          description: 'SNMP connection timeout threshold'
+      valuemaps:
+        - uuid: a9a6a372abb34cfbb3395077594f4978
+          name: 'IF-MIB::ifOperStatus'
+          mappings:
+            - value: '1'
+              newvalue: Up
+            - value: '2'
+              newvalue: Down
+            - value: '4'
+              newvalue: Unknown
+            - value: '5'
+              newvalue: Dormant
+            - value: '6'
+              newvalue: NotPresent
+            - value: '7'
+              newvalue: LowerLayerDown
+        - uuid: a753cf1ac1f44039bc55d35baf53befa
+          name: 'Netscaler HA Current State'
+          mappings:
+            - value: '3'
+              newvalue: Up
+            - value: '0'
+              newvalue: Unknown
+            - value: '2'
+              newvalue: Down
+            - value: '4'
+              newvalue: PartialFail
+            - value: '5'
+              newvalue: MonitorFail
+            - value: '6'
+              newvalue: MonitorOK
+            - value: '7'
+              newvalue: CompleteFailt
+            - value: '8'
+              newvalue: Dumb
+            - value: '9'
+              newvalue: Disabled
+            - value: '10'
+              newvalue: PartialFailSSL
+            - value: '11'
+              newvalue: RouteMonitorFail
+        - uuid: 6c884082c24949a6ad022bd23ebc0b61
+          name: 'Netscaler HA Current Status'
+          mappings:
+            - value: '1'
+              newvalue: Active
+            - value: '2'
+              newvalue: Inactive
+            - value: '0'
+              newvalue: 'No'
+        - uuid: da2a6bfbcac64f41a8f5625c9efd899e
+          name: 'NetScaler HA Mode'
+          mappings:
+            - value: '1'
+              newvalue: Primary
+            - value: '2'
+              newvalue: Secondary
+            - value: '3'
+              newvalue: Unknown
+            - value: '0'
+              newvalue: Standalone
+        - uuid: 33693bd2c039486ebc347fb98211bdf2
+          name: 'NetScaler HA Peer state'
+          mappings:
+            - value: '1'
+              newvalue: Primary
+            - value: '2'
+              newvalue: Secondary
+            - value: '3'
+              newvalue: Unknown
+            - value: '0'
+              newvalue: Standalone
+        - uuid: b88fdc62e8e84c8b81e9cbb86df4ec57
+          name: 'Netscaler vServer State'
+          mappings:
+            - value: '7'
+              newvalue: Up
+            - value: '0'
+              newvalue: Unknown
+            - value: '1'
+              newvalue: Down
+            - value: '2'
+              newvalue: Unknown
+            - value: '3'
+              newvalue: Busy
+            - value: '4'
+              newvalue: 'Out of Service'
+            - value: '5'
+              newvalue: 'Transition to Out of Service'
+            - value: '8'
+              newvalue: 'Down When going Out of Service'
+        - uuid: 0766db5335944badaf14e7a937e65eb9
+          name: 'SNMP Availability'
+          mappings:
+            - value: '1'
+              newvalue: Available
+            - value: '0'
+              newvalue: 'Not Available'
+            - value: '2'
+              newvalue: Unknown
+    - uuid: 73f6c7dea46e4e5bbda934d8430e8d28
+      template: 'BB Citrix NetScaler ADC Traps by SNMP'
+      name: 'BB Citrix NetScaler ADC Traps by SNMP'
+      description: |
+        Focus on general NetScaler active monitoring using SNMP Traps
+        
+        Citrix NetScaler (ADC) is an appliance that load balances access to internal or external applications.
+        
+        Three NetScaler platforms are commonly used: VPX, MPX and SDX. The first, VPX, is virtual and can be deployed in many virtualized environments. It is useful for smaller environments and depends on the capacity and resources of the hypervisor in use. The MPX platform integrates software with Citrix hardware. In this case, the software is optimized for the specific hardware, which includes chips dedicated to SSL processing. SDX, on the other hand, is a virtualization appliance (XenServer) for NetScaler itself, enabling high throughput and application access scaling.
+        
+        To monitor this joint solution, this monitoring template allows you to quickly capture the key metrics of the load balancers in the environment. As the instances change, the monitoring is automatically updated. The metrics history also allows you to observe the behavior and trends of the key indicators.
+        
+        By Diasdm
+        https://github.com/diasdmhub/Citrix_NetScaler_Zabbix_Template
+      vendor:
+        name: diasdm
+        version: 7.2.5
+      groups:
+        - name: 'Templates/Network devices'
+      items:
+        - uuid: ee0b5062a0564a6cbb1e0968d956a7ec
+          name: 'SNMP Trap NetScaler Login Failure'
+          type: SNMP_TRAP
+          key: 'snmptrap[1.3.6.1.4.1.5951.1.1.0.55]'
+          history: 14d
+          value_type: TEXT
+          description: 'The host sends this SNMP trap when a login attempt to the NetScaler ADC fails'
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  // Split the text into lines and remove the first line
+                  var lines = value.split('\n');
+                  lines.shift();
+                  
+                  // Function to remove all double quotes from a line
+                  function removeQuotes(line) {
+                      return line.replace(/"/g, '');
+                  }
+                  
+                  // Loop through each line and apply the function
+                  for (var i = 0; i < lines.length; i++) {
+                      lines[i] = removeQuotes(lines[i]);
+                  }
+                  
+                  // Join the remaining lines back into a single string
+                  var trimmedText = lines.join('\n');
+                  return trimmedText;
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - sysUpTimeInstance
+                - 1.3.6.1.2.1.1.3
+                - '0'
+                - snmpTrapOID
+                - 1.3.6.1.6.3.1.1.4.1
+                - '0'
+                - nsUserName
+                - 1.3.6.1.4.1.5951.4.1.10.2.4
+                - '0'
+                - nsClientIPAddr
+                - 1.3.6.1.4.1.5951.4.1.10.2.23
+                - '0'
+                - sysIpAddress
+                - 1.3.6.1.4.1.5951.4.1.1.2
+                - '0'
+          tags:
+            - tag: SNMP
+              value: trap
+        - uuid: b059903485244bf3878b8793fb7a98fe
+          name: 'SNMP Trap NetScaler Client Rate Limit Exceeded'
+          type: SNMP_TRAP
+          key: 'snmptrap[1.3.6.1.4.1.5951.1.1.0.77]'
+          history: 14d
+          value_type: TEXT
+          description: 'The host sends this SNMP trap when the client exceeds the ratelimit threshold'
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  // Split the text into lines and remove the first line
+                  var lines = value.split('\n');
+                  lines.shift();
+                  
+                  // Function to remove all double quotes from a line
+                  function removeQuotes(line) {
+                      return line.replace(/"/g, '');
+                  }
+                  
+                  // Loop through each line and apply the function
+                  for (var i = 0; i < lines.length; i++) {
+                      lines[i] = removeQuotes(lines[i]);
+                  }
+                  
+                  // Join the remaining lines back into a single string
+                  var trimmedText = lines.join('\n');
+                  return trimmedText;
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - sysUpTimeInstance
+                - 1.3.6.1.2.1.1.3
+                - '0'
+                - snmpTrapOID
+                - 1.3.6.1.6.3.1.1.4.1
+                - '0'
+                - alarmRateLmtThresholdExceeded
+                - 1.3.6.1.4.1.5951.4.1.10.2.13
+                - '3'
+                - ipAddressGathered
+                - 1.3.6.1.4.1.5951.4.1.10.2.14
+                - '0'
+                - stringComputed
+                - 1.3.6.1.4.1.5951.4.1.10.2.15
+                - '0'
+                - platformLicensedThroughput
+                - 1.3.6.1.4.1.5951.4.1.10.2.48
+                - '0'
+                - sysIpAddress
+                - 1.3.6.1.4.1.5951.4.1.1.2
+                - '0'
+          tags:
+            - tag: SNMP
+              value: trap
+        - uuid: 7596fb80fe5c4c8daa50aa9408c561e9
+          name: 'SNMP Trap Community Authentication Failure'
+          type: SNMP_TRAP
+          key: 'snmptrap[1.3.6.1.6.3.1.1.5.5]'
+          history: 14d
+          value_type: TEXT
+          description: |
+            The host sends this SNMP trap to indicate that the SNMP entity has received a protocol message that is not properly authenticated
+            While all implementations of SNMP entities may be able to generate this trap, the snmpEnableAuthenTraps object indicates whether this trap is generated
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  // Split the text into lines and remove the first line
+                  var lines = value.split('\n');
+                  lines.shift();
+                  
+                  // Function to remove all double quotes from a line
+                  function removeQuotes(line) {
+                      return line.replace(/"/g, '');
+                  }
+                  
+                  // Loop through each line and apply the function
+                  for (var i = 0; i < lines.length; i++) {
+                      lines[i] = removeQuotes(lines[i]);
+                  }
+                  
+                  // Join the remaining lines back into a single string
+                  var trimmedText = lines.join('\n');
+                  return trimmedText;
+            - type: SNMP_WALK_TO_JSON
+              parameters:
+                - sysUpTimeInstance
+                - 1.3.6.1.2.1.1.3
+                - '0'
+                - snmpTrapOID
+                - 1.3.6.1.6.3.1.1.4.1
+                - '0'
+                - authAddr
+                - 1.3.6.1.4.1.9.2.1.5
+                - '0'
+                - cExtSnmpTargetAuthInetType
+                - 1.3.6.1.4.1.9.9.412.1.1.1
+                - '0'
+                - cExtSnmpTargetAuthInetAddr
+                - 1.3.6.1.4.1.9.9.412.1.1.2
+                - '0'
+          tags:
+            - tag: SNMP
+              value: trap
+        - uuid: 7b99b5713cce463baaa4df5c28a60bb7
+          name: 'SNMP Trap Community Authentication Failure Daily Count'
+          type: CALCULATED
+          key: 'snmptrap[authenticationFailure.count]'
+          trends: 120d
+          params: 'count(//snmptrap[1.3.6.1.6.3.1.1.5.5],1d,"like","1.3.6.1.6.3.1.1.5.5")'
+          description: 'Number of daily "authenticationFailure" (1.3.6.1.6.3.1.1.5.5) traps received'
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          tags:
+            - tag: Trap
+              value: count
+        - uuid: a133826ff3e846e6bbb584b2ea644789
+          name: 'SNMP Trap NetScaler Login Failure Daily Count'
+          type: CALCULATED
+          key: 'snmptrap[netScalerLoginFailure.count]'
+          trends: 120d
+          params: 'count(//snmptrap[1.3.6.1.4.1.5951.1.1.0.55],1d,"like","1.3.6.1.4.1.5951.1.1.0.55")'
+          description: 'Number of daily "netScalerLoginFailure" (1.3.6.1.4.1.5951.1.1.0.55) traps received'
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          tags:
+            - tag: Trap
+              value: count
+          triggers:
+            - uuid: 9050b5b5ae004c579ea08c39644142c7
+              expression: 'change(/BB Citrix NetScaler ADC Traps by SNMP/snmptrap[netScalerLoginFailure.count])>0'
+              name: 'NetScaler Login Failure'
+              event_name: 'NetScaler User "{?jsonpath(last(//snmptrap[1.3.6.1.4.1.5951.1.1.0.55]),"$..nsUserName.first()","N/A")}" Login Failure from  "{?jsonpath(last(//snmptrap[1.3.6.1.4.1.5951.1.1.0.55]),"$..nsClientIPAddr.first()","N/A")}"'
+              opdata: 'Daily total: {ITEM.LASTVALUE}'
+              status: DISABLED
+              priority: WARNING
+              description: 'This trigger is true when the NetScaler device sends an SNMP trap indicating that a login attempt failed'
+              tags:
+                - tag: Count
+                  value: login
+                - tag: Login
+                  value: failure
+        - uuid: 13d172deaaed4a1292f176bec96223e3
+          name: 'SNMP Trap NetScaler Client Rate Limit Exceeded Daily Count'
+          type: CALCULATED
+          key: 'snmptrap[rateLmtThresholdExceed.count]'
+          history: 14d
+          trends: 120d
+          params: 'count(//snmptrap[1.3.6.1.4.1.5951.1.1.0.77],1d,"like","rateLmtThresholdExceed")'
+          description: 'Number of daily "rateLmtThresholdExceed" (1.3.6.1.4.1.5951.1.1.0.77) traps received'
+          preprocessing:
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          tags:
+            - tag: Trap
+              value: count
+          triggers:
+            - uuid: 8383e5b1944c4303a8528aa721f09bde
+              expression: 'change(/BB Citrix NetScaler ADC Traps by SNMP/snmptrap[rateLmtThresholdExceed.count])>=1'
+              name: 'NetScaler Client Rate Limit Exceeded'
+              event_name: 'vServer {?jsonpath(last(//snmptrap[1.3.6.1.4.1.5951.1.1.0.77]),"$..stringComputed","N/A")} - Limit of {?jsonpath(last(//snmptrap[1.3.6.1.4.1.5951.1.1.0.77]),"$..platformLicensedThroughput","N/A")} Exceeded'
+              opdata: 'Daily total: {ITEM.LASTVALUE}'
+              priority: AVERAGE
+              description: 'This trigger is true when the NetScaler device sends an SNMP trap indicating that the rate limit threshold has been exceeded'
+              tags:
+                - tag: Count
+                  value: limit
+                - tag: Limit
+                  value: exceeded
+      tags:
+        - tag: Citrix
+          value: netscaler
