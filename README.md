@@ -1,5 +1,14 @@
 # Citrix NetScaler ADC Zabbix Template by SNMP
 
+<div align="right">
+
+[![License](https://img.shields.io/badge/License-GPL3-blue?logo=opensourceinitiative&logoColor=fff)][license]
+[![Version](https://img.shields.io/badge/Version-725-blue?logo=zotero&color=0aa8d2)][latest_release]
+
+</div>
+
+<BR>
+
 ## OVERVIEW
 
 [**Citrix NetScaler (ADC)**][netscaleradc] is an appliance that load balances access to internal or external applications.
@@ -565,4 +574,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 [netscaleradc]: https://www.citrix.com/platform/netscaler/
 [snmpref]: https://developer-docs.netscaler.com/en-us/adc-snmp-oid-reference
 [releases]: https://github.com/diasdmhub/Citrix_NetScaler_ADC_Zabbix_Template/releases
+[latest_release]: https://github.com/diasdmhub/Citrix_NetScaler_ADC_Zabbix_Template/releases/tag/latest
 [import_templates]: https://www.zabbix.com/documentation/current/en/manual/xml_export_import/templates#importing
+[license]: ./LICENSE
