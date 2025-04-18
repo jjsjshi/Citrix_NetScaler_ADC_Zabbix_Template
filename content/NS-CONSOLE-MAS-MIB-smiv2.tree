@@ -1,0 +1,246 @@
++--iso(1)
+   |
+   +--org(3)
+      |
+      +--dod(6)
+         |
+         +--internet(1)
+            |
+            +--directory(1)
+            |
+            +--mgmt(2)
+            |  |
+            |  +--mib-2(1)
+            |     |
+            |     +--transmission(10)
+            |     |
+            |     +--inetAddressMIB(76)
+            |
+            +--experimental(3)
+            |
+            +--private(4)
+            |  |
+            |  +--enterprises(1)
+            |     |
+            |     +--netScaler(5951)
+            |        |
+            |        +--masRoot(7)
+            |           |
+            |           +--masEventGroup(1)
+            |           |  |
+            |           |  +--eventVarBindOids(1)
+            |           |  |  |
+            |           |  |  +-- ---N String    source(1)
+            |           |  |  +-- ---N String    entityName(2)
+            |           |  |  +-- ---N String    entityType(3)
+            |           |  |  +-- ---N String    eventMessage(4)
+            |           |  |  +-- ---N String    thresholdValue(5)
+            |           |  |  +-- ---N String    currentValue(6)
+            |           |  |  +-- ---N String    severity(7)
+            |           |  |
+            |           |  +--mpsEvents(2)
+            |           |     |
+            |           |     +--cpuUsageHigh(1)
+            |           |     +--cpuUsageNormal(2)
+            |           |     +--memoryUsageHigh(3)
+            |           |     +--memoryUsageNormal(4)
+            |           |     +--diskUtilizationHigh(35)
+            |           |     +--diskUtilizationNormal(36)
+            |           |     +--subSystemDown(43)
+            |           |     +--subSystemUp(44)
+            |           |     +--subSystemFailed(45)
+            |           |     +--mpsDown(46)
+            |           |     +--mpsUp(47)
+            |           |     +--passwordRecoveryFailed(48)
+            |           |     +--passwordRecoverySuccess(49)
+            |           |     +--deviceStateChanged(54)
+            |           |     +--backupFailed(58)
+            |           |     +--loginFailure(71)
+            |           |     +--inventoryFailed(72)
+            |           |     +--trapConfigFailure(78)
+            |           |     +--licensePoolThresholdWarning(84)
+            |           |     +--licensePoolThresholdNormal(85)
+            |           |     +--vipLicenseLimitWarning(86)
+            |           |     +--vipLicenseLimitNormal(87)
+            |           |     +--remoteBackupFailed(88)
+            |           |     +--remoteBackupResumed(89)
+            |           |     +--perfCounterThresholdHigh(90)
+            |           |     +--perfCounterThresholdNormal(91)
+            |           |     +--devicebackupFailed(92)
+            |           |     +--remoteDeviceBackupFailed(93)
+            |           |     +--dataStorageExceeded(94)
+            |           |     +--dataStorageNormal(95)
+            |           |     +--sslCertThresholdBreached(96)
+            |           |     +--sslCertThresholdNormal(97)
+            |           |     +--haFailover(98)
+            |           |     +--haNoHeartBeats(99)
+            |           |     +--haDatabaseOutOfSync(100)
+            |           |     +--inventoryUp(101)
+            |           |     +--deviceBooted(104)
+            |           |     +--deviceRebooted(105)
+            |           |     +--autoScaleGroupAdded(106)
+            |           |     +--autoScaleGroupModified(107)
+            |           |     +--autoScaleGroupDeleted(108)
+            |           |     +--clusterProvisionStatus(109)
+            |           |     +--nodeProvisionStatus(110)
+            |           |     +--coolDownPeriodStatus(111)
+            |           |     +--clusterDeprovisionStatus(112)
+            |           |     +--nodeDeprovisionStatus(113)
+            |           |     +--drainConnPeriodStatus(114)
+            |           |     +--deployAppStatus(115)
+            |           |     +--modifyAppStatus(116)
+            |           |     +--deleteAppStatus(117)
+            |           |     +--ipLimitReached(118)
+            |           |     +--scaleOutStatus(119)
+            |           |     +--scaleInStatus(120)
+            |           |     +--addIPSetStatus(121)
+            |           |     +--deleteIPSetStatus(122)
+            |           |     +--addZone(123)
+            |           |     +--deleteZone(124)
+            |           |     +--addRecord(125)
+            |           |     +--deleteRecord(126)
+            |           |     +--addRRData(127)
+            |           |     +--deleteRRData(128)
+            |           |     +--instancePolicyReconfigurationFailed(131)
+            |           |     +--instancePolicyReconfigurationSucceeded(132)
+            |           |     +--autoscalegroupUpgrade(133)
+            |           |     +--licensePoolExpiryWarning(134)
+            |           |     +--licensePoolExpiryNormal(135)
+            |           |     +--haSplitBrainRecovered(136)
+            |           |     +--haNormalHeartBeats(137)
+            |           |     +--haDatabaseInSync(138)
+            |           |     +--haSplitBrainDiscovered(139)
+            |           |     +--rlCPUBreach(140)
+            |           |     +--rlPPSBreach(141)
+            |           |     +--rlRateBreach(142)
+            |           |     +--rlSSLThroughputBreach(143)
+            |           |     +--rlSSLTPSBreach(144)
+            |           |     +--clusterShutdownStatus(152)
+            |           |     +--clusterBootupStatus(153)
+            |           |     +--haNodesVersionMisMatch(154)
+            |           |     +--haNodesVersionIsMatched(155)
+            |           |     +--deviceStateCleared(156)
+            |           |     +--TelemetryAutoUpload(160)
+            |           |
+            |           +--systemGroup(2)
+            |           |  |
+            |           |  +-- -R-- String    systemPlatform(1)
+            |           |  +-- -R-- String    systemProduct(2)
+            |           |  +-- -R-- String    systemBuildNumber(3)
+            |           |  +-- -R-- EnumVal   systemIPAddressType(4)
+            |           |  |        Textual Convention: InetAddressType
+            |           |  |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |           |  +-- -R-- String    systemIPAddress(5)
+            |           |  |        Textual Convention: InetAddress
+            |           |  |        Size: 0..255
+            |           |  +-- -R-- EnumVal   systemNetmaskType(6)
+            |           |  |        Textual Convention: InetAddressType
+            |           |  |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |           |  +-- -R-- String    systemNetmask(7)
+            |           |  |        Textual Convention: InetAddress
+            |           |  |        Size: 0..255
+            |           |  +-- -R-- EnumVal   systemGatewayType(8)
+            |           |  |        Textual Convention: InetAddressType
+            |           |  |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |           |  +-- -R-- String    systemGateway(9)
+            |           |  |        Textual Convention: InetAddress
+            |           |  |        Size: 0..255
+            |           |  +-- -R-- EnumVal   systemDnsType(10)
+            |           |  |        Textual Convention: InetAddressType
+            |           |  |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |           |  +-- -R-- String    systemDns(11)
+            |           |  |        Textual Convention: InetAddress
+            |           |  |        Size: 0..255
+            |           |  +-- -R-- String    systemSysId(12)
+            |           |  +-- -R-- String    systemSerial(13)
+            |           |  +-- -R-- Integer32 systemCurrentTime(14)
+            |           |  +-- -R-- String    systemUptime(15)
+            |           |  +-- -R-- String    systemBiosVersion(16)
+            |           |  +-- -R-- String    systemCustomID(17)
+            |           |  +-- -R-- String    systemCpuUsage(18)
+            |           |  +-- -R-- String    systemMemoryUsage(19)
+            |           |  +-- -R-- String    systemDiskUsage(20)
+            |           |
+            |           +--deviceGroup(3)
+            |              |
+            |              +--netscalerTable(2)
+            |                 |
+            |                 +--netscalerEntry(1)
+            |                    |  Index: nsIpAddressType, nsIpAddress, nsHostIPAddressType, nsHostIPAddress
+            |                    |
+            |                    +-- -R-- EnumVal   nsIpAddressType(1)
+            |                    |        Textual Convention: InetAddressType
+            |                    |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |                    +-- -R-- String    nsIpAddress(2)
+            |                    |        Textual Convention: InetAddress
+            |                    |        Size: 0..255
+            |                    +-- -R-- EnumVal   nsHostIPAddressType(3)
+            |                    |        Textual Convention: InetAddressType
+            |                    |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |                    +-- -R-- String    nsHostIPAddress(4)
+            |                    |        Textual Convention: InetAddress
+            |                    |        Size: 0..255
+            |                    +-- -R-- String    nsProfileName(5)
+            |                    +-- -R-- String    nsName(6)
+            |                    +-- -R-- EnumVal   nsNetmaskType(7)
+            |                    |        Textual Convention: InetAddressType
+            |                    |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |                    +-- -R-- String    nsNetmask(8)
+            |                    |        Textual Convention: InetAddress
+            |                    |        Size: 0..255
+            |                    +-- -R-- EnumVal   nsGatewayType(9)
+            |                    |        Textual Convention: InetAddressType
+            |                    |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |                    +-- -R-- String    nsGateway(10)
+            |                    |        Textual Convention: InetAddress
+            |                    |        Size: 0..255
+            |                    +-- -R-- String    nsHostname(11)
+            |                    +-- -R-- String    nsDescription(12)
+            |                    +-- -R-- String    nsVersion(13)
+            |                    +-- -R-- String    nsUuid(14)
+            |                    +-- -R-- String    nsInstanceState(15)
+            |                    +-- -R-- String    nsVirtualFunctions(16)
+            |                    +-- -R-- String    nsSslVirtualFunctions(17)
+            |                    +-- -R-- String    nsVmState(18)
+            |                    +-- -R-- Integer32 nsNumberOfCPU(19)
+            |                    +-- -R-- String    nsVmMemoryTotal(21)
+            |                    +-- -R-- String    nsUptime(26)
+            |                    +-- -R-- Integer32 nsNumberOfSSLCores(27)
+            |                    +-- -R-- String    nsCpuCoreMgmt(28)
+            |                    +-- -R-- String    nsCpuCorePE(29)
+            |                    +-- -R-- String    nsVmDescription(30)
+            |                    +-- -R-- String    nsThroughput(31)
+            |                    +-- -R-- Integer32 nsNumberOfCores(32)
+            |                    +-- -R-- String    nsNsCPUUsage(33)
+            |                    +-- -R-- String    nsNsMemoryUsage(35)
+            |                    +-- -R-- String    nsNsTx(36)
+            |                    +-- -R-- String    nsNsRx(37)
+            |                    +-- -R-- String    nsHttpReq(38)
+            |                    +-- -R-- String    nsUpsince(39)
+            |                    +-- -R-- String    nsLicense(40)
+            |                    +-- -R-- String    nsHaMasterState(41)
+            |                    +-- -R-- EnumVal   nsHaIPAddressType(42)
+            |                    |        Textual Convention: InetAddressType
+            |                    |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |                    +-- -R-- String    nsHaIPAddress(43)
+            |                    |        Textual Convention: InetAddress
+            |                    |        Size: 0..255
+            |                    +-- -R-- String    nsNodeState(44)
+            |                    +-- -R-- String    nsHaSync(45)
+            |                    +-- -R-- String    nsPps(46)
+            |                    +-- -R-- Integer32 nsNumberOfSslCoresUp(47)
+            |                    +-- -R-- String    nsIfOby1(48)
+            |                    +-- -R-- String    nsIf0by2(49)
+            |                    +-- -R-- Integer32 nsNsVLANId(50)
+            |                    +-- -R-- String    nsNsVLANTagged(51)
+            |                    +-- -R-- Integer32 nsVlanType(52)
+            |
+            +--security(5)
+            |
+            +--snmpV2(6)
+               |
+               +--snmpDomains(1)
+               |
+               +--snmpProxys(2)
+               |
+               +--snmpModules(3)

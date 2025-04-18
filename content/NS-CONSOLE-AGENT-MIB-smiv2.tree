@@ -1,0 +1,81 @@
++--iso(1)
+   |
+   +--org(3)
+      |
+      +--dod(6)
+         |
+         +--internet(1)
+            |
+            +--directory(1)
+            |
+            +--mgmt(2)
+            |  |
+            |  +--mib-2(1)
+            |     |
+            |     +--transmission(10)
+            |     |
+            |     +--inetAddressMIB(76)
+            |
+            +--experimental(3)
+            |
+            +--private(4)
+            |  |
+            |  +--enterprises(1)
+            |     |
+            |     +--netScaler(5951)
+            |        |
+            |        +--masRoot(7)
+            |           |
+            |           +--masEventGroup(1)
+            |           |  |
+            |           |  +--eventVarBindOids(1)
+            |           |  |
+            |           |  +--mpsEvents(2)
+            |           |
+            |           +--systemGroup(2)
+            |              |
+            |              +-- -R-- String    systemPlatform(1)
+            |              +-- -R-- String    systemProduct(2)
+            |              +-- -R-- String    systemBuildNumber(3)
+            |              +-- -R-- EnumVal   systemIPAddressType(4)
+            |              |        Textual Convention: InetAddressType
+            |              |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |              +-- -R-- String    systemIPAddress(5)
+            |              |        Textual Convention: InetAddress
+            |              |        Size: 0..255
+            |              +-- -R-- EnumVal   systemNetmaskType(6)
+            |              |        Textual Convention: InetAddressType
+            |              |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |              +-- -R-- String    systemNetmask(7)
+            |              |        Textual Convention: InetAddress
+            |              |        Size: 0..255
+            |              +-- -R-- EnumVal   systemGatewayType(8)
+            |              |        Textual Convention: InetAddressType
+            |              |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |              +-- -R-- String    systemGateway(9)
+            |              |        Textual Convention: InetAddress
+            |              |        Size: 0..255
+            |              +-- -R-- EnumVal   systemDnsType(10)
+            |              |        Textual Convention: InetAddressType
+            |              |        Values: unknown(0), ipv4(1), ipv6(2), ipv4z(3), ipv6z(4), dns(16)
+            |              +-- -R-- String    systemDns(11)
+            |              |        Textual Convention: InetAddress
+            |              |        Size: 0..255
+            |              +-- -R-- String    systemSysId(12)
+            |              +-- -R-- String    systemSerial(13)
+            |              +-- -R-- String    systemUptime(14)
+            |              +-- -R-- Integer32 systemCurrentTime(15)
+            |              +-- -R-- String    systemCustomID(17)
+            |              +-- -R-- String    systemCpuUsage(18)
+            |              +-- -R-- Counter64 systemMemoryUsage(19)
+            |              +-- -R-- Counter64 systemDiskUsage(20)
+            |
+            +--security(5)
+            |
+            +--snmpV2(6)
+               |
+               +--snmpDomains(1)
+               |
+               +--snmpProxys(2)
+               |
+               +--snmpModules(3)

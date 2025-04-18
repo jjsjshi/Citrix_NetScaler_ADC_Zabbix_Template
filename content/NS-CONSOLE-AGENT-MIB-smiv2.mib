@@ -1,0 +1,193 @@
+
+MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	Counter32, Gauge32, Integer32, IpAddress, NOTIFICATION-TYPE,OBJECT-TYPE, TimeTicks, enterprises, MODULE-IDENTITY, OBJECT-IDENTITY
+		FROM SNMPv2-SMI
+	Ipv6Address
+		FROM IPV6-TC
+	 InetAddressType, InetAddress
+		FROM INET-ADDRESS-MIB;
+
+netScaler MODULE-IDENTITY
+	LAST-UPDATED "202211210000Z"
+	ORGANIZATION "Citrix Systems, Inc."
+	CONTACT-INFO  "Citrix Technical Assistance Center
+			Postal: Citrix Systems, Inc.
+				851 West Cypress Creek Road
+				Fort Lauderdale, Florida  33309
+				United States
+			Tel: +1-800-4-CITRIX (+1-800-424-8749)
+			E-mail: customercare@citrix.com"
+	DESCRIPTION "The enterprise specific MIB for NetScaler Console."
+	::= { enterprises 5951 }
+
+
+masRoot OBJECT IDENTIFIER
+	::= { netScaler 7}
+
+masEventGroup OBJECT IDENTIFIER
+::= { masRoot  1 }
+
+
+systemGroup OBJECT IDENTIFIER
+::= { masRoot  2 }
+
+systemPlatform OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Platform"
+	::= { systemGroup 1 }
+
+systemProduct OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Product Name"
+	::= { systemGroup 2 }
+
+systemBuildNumber OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Build Number"
+	::= { systemGroup 3 }
+
+systemIPAddressType OBJECT-TYPE 
+	SYNTAX  InetAddressType
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Type of systemIPAddress"
+	::= { systemGroup 4 }
+systemIPAddress OBJECT-TYPE 
+	SYNTAX  InetAddress
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"IP Address"
+	::= { systemGroup 5 }
+
+systemNetmaskType OBJECT-TYPE 
+	SYNTAX  InetAddressType
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Type of systemNetmask"
+	::= { systemGroup 6 }
+systemNetmask OBJECT-TYPE 
+	SYNTAX  InetAddress
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Netmask"
+	::= { systemGroup 7 }
+
+systemGatewayType OBJECT-TYPE 
+	SYNTAX  InetAddressType
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Type of systemGateway"
+	::= { systemGroup 8 }
+systemGateway OBJECT-TYPE 
+	SYNTAX  InetAddress
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Gateway "
+	::= { systemGroup 9 }
+
+systemDnsType OBJECT-TYPE 
+	SYNTAX  InetAddressType
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Type of systemDns"
+	::= { systemGroup 10 }
+systemDns OBJECT-TYPE 
+	SYNTAX  InetAddress
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"DNS Server"
+	::= { systemGroup 11 }
+
+systemSysId OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"System Id"
+	::= { systemGroup 12 }
+
+systemSerial OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Serial Number"
+	::= { systemGroup 13 }
+
+systemUptime OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Uptime"
+	::= { systemGroup 14 }
+
+systemCurrentTime OBJECT-TYPE 
+	SYNTAX  Integer32
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Current Time"
+	::= { systemGroup 15 }
+
+systemCustomID OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Custom identification number for appliance"
+	::= { systemGroup 17 }
+
+systemCpuUsage OBJECT-TYPE 
+	SYNTAX  OCTET STRING
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Total CPU usage."
+	::= { systemGroup 18 }
+
+systemMemoryUsage OBJECT-TYPE 
+	SYNTAX  Counter64
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Total memory usage."
+	::= { systemGroup 19 }
+
+systemDiskUsage OBJECT-TYPE 
+	SYNTAX  Counter64
+	MAX-ACCESS  read-only
+	STATUS  current
+	DESCRIPTION
+		"Total disk space usage."
+	::= { systemGroup 20 }
+
+
+eventVarBindOids OBJECT IDENTIFIER
+::= { masEventGroup 1 }
+
+
+mpsEvents OBJECT IDENTIFIER
+::= { masEventGroup 2 }
+
+
+END -- end of module MIB
