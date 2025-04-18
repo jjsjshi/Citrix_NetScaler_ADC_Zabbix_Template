@@ -1,0 +1,340 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="HTML Tidy for Windows (vers 15 August 2007), see www.w3.org">
+    <style type="text/css">
+BODY {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 80%;
+    }
+    blockquote {
+        margin-top: -5pt; 
+        margin-bottom: 15px;
+        margin-left: 26px;
+    }
+    H1 {
+        font-size: 130%;
+        font-weight: bold; 
+        margin-top: 12pt; 
+        margin-bottom: 6pt; 
+    }
+    H2 {
+        font-size: 118%;
+        font-weight: bold; 
+        margin-top: 10pt; 
+        margin-bottom: 6pt; 
+    }
+    H3 {
+        font-size: 100%;
+        font-weight: bold;
+        margin-top: 10pt;
+        margin-bottom: 6pt; 
+    }
+    H4 {
+        font-size: 80%;
+        margin-top: 30pt; 
+        border-top: #5A739C 1px solid;
+        padding-top: 8px;
+    }
+    H5 {
+        font-weight: bold;
+        margin-bottom: 0px;
+    }
+    HR {
+        width: 100%;
+        height: 2px;
+        border: none;
+    }
+    aTABLE   {
+        margin-top: 16px;
+        margin-bottom: 18px;
+    }
+    TH {
+        font-weight: bold;
+        height: 20pt;
+        
+    }
+    OL {
+        margin-top: 12px;
+        margin-bottom: 6px;
+    } 
+    UL {
+        margin-top: 6px;
+        margin-bottom: 6px;
+        list-style-type: disc;
+    } 
+    OL OL LI {
+        list-style-type: upper-alpha;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: -2px;
+    }
+    OL UL LI {
+        list-style: disc;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: -10px;
+    }
+    OL UL UL LI, UL UL LI {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: -14px;
+    }
+    P {     
+        font-size: 12px;
+        
+    }
+    .section {
+        font-size: 130%;
+        font-weight: bold;
+        padding-top: 0px;
+        padding-bottom: 6px;
+        border-bottom: #5A739C 1px solid;
+        margin-bottom: 16px;
+    }
+    .noweb {
+    }
+    </style>
+    <title>NetScaler Console - SNMP OID Reference</title>
+</head>
+<body><a name="Top">
+<h1>NetScaler Console - SNMP OID Reference</h1>
+</a>
+<br>This document provides details about the information provided by NetScaler Console via SNMP.
+<br><br><a href="#MIB-II OIDs"><b>MIB-II OIDs</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-1"><b>system</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ifTable"><b>ifTable</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#icmp"><b>icmp</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#udp"><b>udp</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#udpTable"><b>udpTable</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#snmp"><b>snmp</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ifMIBObjects"><b>ifMIBObjects</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ifXTable"><b>ifXTable</b></a><br>
+
+<a href="#NetScaler Console OIDs"><b>NetScaler Console OIDs</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#masEventGroup"><b>masEventGroup</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#systemGroup"><b>systemGroup</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#deviceGroup"><b>deviceGroup</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#netscalerTable"><b>netscalerTable</b></a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#eventVarBindOids"><b>eventVarBindOids</b></a><br>
+
+<a href="#Generic Traps"><b>Generic Traps</b></a><br><a href="#Enterprise Specific Traps"><b>Enterprise Specific Traps</b></a><br><br><hr width="100%"><a name="MIB-II OIDs"><h3>MIB-II OIDs</h3></a><br><b><a name="system">system</a> (1.3.6.1.2.1.1)</b><br>sysDescr (1.3.6.1.2.1.1.1)<br>sysObjectID (1.3.6.1.2.1.1.2)<br>sysUpTime (1.3.6.1.2.1.1.3)<br>sysContact (1.3.6.1.2.1.1.4)<br>sysName (1.3.6.1.2.1.1.5)<br>sysLocation (1.3.6.1.2.1.1.6)<br>sysServices (1.3.6.1.2.1.1.7)<br><br><b><a name="ifTable">ifTable</a> (1.3.6.1.2.1.2.2)</b><br>ifIndex (1.3.6.1.2.1.2.2.1.1)<br>ifDescr (1.3.6.1.2.1.2.2.1.2)<br>ifType (1.3.6.1.2.1.2.2.1.3)<br>ifMtu (1.3.6.1.2.1.2.2.1.4)<br>ifSpeed (1.3.6.1.2.1.2.2.1.5)<br>ifPhysAddress (1.3.6.1.2.1.2.2.1.6)<br>ifAdminStatus (1.3.6.1.2.1.2.2.1.7)<br>ifOperStatus (1.3.6.1.2.1.2.2.1.8)<br>ifLastChange (1.3.6.1.2.1.2.2.1.9)<br>ifInOctets (1.3.6.1.2.1.2.2.1.10)<br>ifInUcastPkts (1.3.6.1.2.1.2.2.1.11)<br>ifInNUcastPkts (1.3.6.1.2.1.2.2.1.12)<br>ifInDiscards (1.3.6.1.2.1.2.2.1.13)<br>ifInErrors (1.3.6.1.2.1.2.2.1.14)<br>ifInUnknownProtos (1.3.6.1.2.1.2.2.1.15)<br>ifOutOctets (1.3.6.1.2.1.2.2.1.16)<br>ifOutUcastPkts (1.3.6.1.2.1.2.2.1.17)<br>ifOutNUcastPkts (1.3.6.1.2.1.2.2.1.18)<br>ifOutDiscards (1.3.6.1.2.1.2.2.1.19)<br>ifOutErrors (1.3.6.1.2.1.2.2.1.20)<br>ifOutQLen (1.3.6.1.2.1.2.2.1.21)<br>ifSpecific (1.3.6.1.2.1.2.2.1.22)<br><br><b><a name="icmp">icmp</a> (1.3.6.1.2.1.5)</b><br>icmpInMsgs (1.3.6.1.2.1.5.1)<br>icmpInErrors (1.3.6.1.2.1.5.2)<br>icmpInDestUnreachs (1.3.6.1.2.1.5.3)<br>icmpInTimeExcds (1.3.6.1.2.1.5.4)<br>icmpInParmProbs (1.3.6.1.2.1.5.5)<br>icmpInSrcQuenchs (1.3.6.1.2.1.5.6)<br>icmpInRedirects (1.3.6.1.2.1.5.7)<br>icmpInEchos (1.3.6.1.2.1.5.8)<br>icmpInEchoReps (1.3.6.1.2.1.5.9)<br>icmpInTimestamps (1.3.6.1.2.1.5.10)<br>icmpInTimestampReps (1.3.6.1.2.1.5.11)<br>icmpInAddrMasks (1.3.6.1.2.1.5.12)<br>icmpInAddrMaskReps (1.3.6.1.2.1.5.13)<br>icmpOutMsgs (1.3.6.1.2.1.5.14)<br>icmpOutErrors (1.3.6.1.2.1.5.15)<br>icmpOutDestUnreachs (1.3.6.1.2.1.5.16)<br>icmpOutTimeExcds (1.3.6.1.2.1.5.17)<br>icmpOutParmProbs (1.3.6.1.2.1.5.18)<br>icmpOutSrcQuenchs (1.3.6.1.2.1.5.19)<br>icmpOutRedirects (1.3.6.1.2.1.5.20)<br>icmpOutEchos (1.3.6.1.2.1.5.21)<br>icmpOutEchoReps (1.3.6.1.2.1.5.22)<br>icmpOutTimestamps (1.3.6.1.2.1.5.23)<br>icmpOutTimestampReps (1.3.6.1.2.1.5.24)<br>icmpOutAddrMasks (1.3.6.1.2.1.5.25)<br>icmpOutAddrMaskReps (1.3.6.1.2.1.5.26)<br><br><b><a name="udp">udp</a> (1.3.6.1.2.1.7)</b><br>udpInDatagrams (1.3.6.1.2.1.7.1)<br>udpNoPorts (1.3.6.1.2.1.7.2)<br>udpInErrors (1.3.6.1.2.1.7.3)<br>udpOutDatagrams (1.3.6.1.2.1.7.4)<br><br><b><a name="udpTable">udpTable</a> (1.3.6.1.2.1.7.5)</b><br>udpLocalAddress (1.3.6.1.2.1.7.5.1.1)<br>udpLocalPort (1.3.6.1.2.1.7.5.1.2)<br><br><b><a name="snmp">snmp</a> (1.3.6.1.2.1.11)</b><br>snmpInPkts (1.3.6.1.2.1.11.1)<br>snmpInBadVersions (1.3.6.1.2.1.11.3)<br>snmpInBadCommunityNames (1.3.6.1.2.1.11.4)<br>snmpInBadCommunityUses (1.3.6.1.2.1.11.5)<br>snmpInASNParseErrs (1.3.6.1.2.1.11.6)<br>snmpEnableAuthenTraps (1.3.6.1.2.1.11.30)<br>snmpSilentDrops (1.3.6.1.2.1.11.31)<br>snmpProxyDrops (1.3.6.1.2.1.11.32)<br><br><b><a name="ifMIBObjects">ifMIBObjects</a> (1.3.6.1.2.1.31.1)</b><br><br><b><a name="ifXTable">ifXTable</a> (1.3.6.1.2.1.31.1.1)</b><br>ifNamed (1.3.6.1.2.1.31.1.1.1.1)<br>ifInMulticastPkts (1.3.6.1.2.1.31.1.1.1.2)<br>ifInBroadcastPkts (1.3.6.1.2.1.31.1.1.1.3)<br>ifOutMulticastPkts (1.3.6.1.2.1.31.1.1.1.4)<br>ifOutBroadcastPkts (1.3.6.1.2.1.31.1.1.1.5)<br>ifHCInOctets (1.3.6.1.2.1.31.1.1.1.6)<br>ifHCInUcastPkts (1.3.6.1.2.1.31.1.1.1.7)<br>ifHCInMulticastPkts (1.3.6.1.2.1.31.1.1.1.8)<br>ifHCInBroadcastPkts (1.3.6.1.2.1.31.1.1.1.9)<br>ifHCOutOctets (1.3.6.1.2.1.31.1.1.1.10)<br>ifHCOutUcastPkts (1.3.6.1.2.1.31.1.1.1.11)<br>ifHCOutMulticastPkts (1.3.6.1.2.1.31.1.1.1.12)<br>ifHCOutBroadcastPkts (1.3.6.1.2.1.31.1.1.1.13)<br>ifLinkUpDownTrapEnable (1.3.6.1.2.1.31.1.1.1.14)<br>ifHighSpeed (1.3.6.1.2.1.31.1.1.1.15)<br>ifPromiscuousMode (1.3.6.1.2.1.31.1.1.1.16)<br>ifConnectorPresent (1.3.6.1.2.1.31.1.1.1.17)<br>ifAlias (1.3.6.1.2.1.31.1.1.1.18)<br>ifCounterDiscontinuityTime (1.3.6.1.2.1.31.1.1.1.19)<br>ifTableLastChange (1.3.6.1.2.1.31.1.5)<br><hr width="100%%"><a name="Generic Traps"><h3>Generic Traps</h3></a><br>coldStart (1.3.6.1.6.3.1.1.5.1)<br>The SNMP daemon in the Management Service virtual machine is reinitializing.<br><hr width="100%%"><a name="Enterprise Specific Traps"><h3>Enterprise Specific Traps</h3></a><br>cpuUsageHigh (1.3.6.1.4.1.5951.7.1.2.1) <br>CPU utilization has exceeded the high threshold value<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#currentValue">currentValue</a>, <a href="#thresholdValue">thresholdValue</a>, <a href="#severity">severity</a><br><br>cpuUsageNormal (1.3.6.1.4.1.5951.7.1.2.2) <br>CPU utilization has returned to normal<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#currentValue">currentValue</a>, <a href="#thresholdValue">thresholdValue</a>, <a href="#severity">severity</a><br><br>memoryUsageHigh (1.3.6.1.4.1.5951.7.1.2.3) <br>Memory utilization has exceeded the high threshold value.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#currentValue">currentValue</a>, <a href="#thresholdValue">thresholdValue</a>, <a href="#severity">severity</a><br><br>memoryUsageNormal (1.3.6.1.4.1.5951.7.1.2.4) <br>Memory utilization has returned to normal<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#currentValue">currentValue</a>, <a href="#thresholdValue">thresholdValue</a>, <a href="#severity">severity</a><br><br>diskUtilizationHigh (1.3.6.1.4.1.5951.7.1.2.35) <br>This trap is sent when the Disk utilization goes high. 'entityName' and 'eventMessage' will show specific failure information<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#currentValue">currentValue</a>, <a href="#thresholdValue">thresholdValue</a>, <a href="#severity">severity</a><br><br>diskUtilizationNormal (1.3.6.1.4.1.5951.7.1.2.36) <br>This
+ trap is sent when the Disk utilization becomes normal. 'entityName' and
+ 'eventMessage' will show specific failure information<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#currentValue">currentValue</a>, <a href="#thresholdValue">thresholdValue</a>, <a href="#severity">severity</a><br><br>subSystemDown (1.3.6.1.4.1.5951.7.1.2.43) <br>A subsystem has gone DOWN; entityName shows details<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>subSystemUp (1.3.6.1.4.1.5951.7.1.2.44) <br>A subsystem has returned to the UP state; entityName shows details<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>subSystemFailed (1.3.6.1.4.1.5951.7.1.2.45) <br>A subsystem has failed; entityName shows details<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>mpsDown (1.3.6.1.4.1.5951.7.1.2.46) <br>All subsystems are DOWN<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>mpsUp (1.3.6.1.4.1.5951.7.1.2.47) <br>All subsystems are UP<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>passwordRecoveryFailed (1.3.6.1.4.1.5951.7.1.2.48) <br>Password recovery has failed<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>passwordRecoverySuccess (1.3.6.1.4.1.5951.7.1.2.49) <br>Password has been recovered successfully<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deviceStateChanged (1.3.6.1.4.1.5951.7.1.2.54) <br>Instance state of a managed device has changed to down or out of service<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>backupFailed (1.3.6.1.4.1.5951.7.1.2.58) <br>This trap is sent when the backup operation fails<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>loginFailure (1.3.6.1.4.1.5951.7.1.2.71) <br>This trap is sent when User Authentication fails. 'entityName' and 'eventMessage' will show specific failure information<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>inventoryFailed (1.3.6.1.4.1.5951.7.1.2.72) <br>XenServer inventory collection has failed<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>trapConfigFailure (1.3.6.1.4.1.5951.7.1.2.78) <br>This trap is sent when failure occurs in adding snmp trap destination<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>licensePoolThresholdWarning (1.3.6.1.4.1.5951.7.1.2.84) <br>licensePoolThresholdWarning; LicensePool is crossed Threshold value<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>licensePoolThresholdNormal (1.3.6.1.4.1.5951.7.1.2.85) <br>LicensePool is below Threshold value<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>vipLicenseLimitWarning (1.3.6.1.4.1.5951.7.1.2.86) <br>VIPs are more than License Limit<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>vipLicenseLimitNormal (1.3.6.1.4.1.5951.7.1.2.87) <br>VIPs are below than License Limit<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>remoteBackupFailed (1.3.6.1.4.1.5951.7.1.2.88) <br>This trap is sent when Remote Backup fails.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>remoteBackupResumed (1.3.6.1.4.1.5951.7.1.2.89) <br>This trap is sent when Remote Backup failure is rectified and its running again.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>perfCounterThresholdHigh (1.3.6.1.4.1.5951.7.1.2.90) <br>perfCounterThresholdHigh; Performance counter value has crossed the Threshold value<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>perfCounterThresholdNormal (1.3.6.1.4.1.5951.7.1.2.91) <br>perfCounterThresholdNormal; Performance counter value is below the Clear value<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>devicebackupFailed (1.3.6.1.4.1.5951.7.1.2.92) <br>This trap is sent when the device backup operation fails<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>remoteDeviceBackupFailed (1.3.6.1.4.1.5951.7.1.2.93) <br>This trap is sent when Remote Device Backup fails.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>dataStorageExceeded (1.3.6.1.4.1.5951.7.1.2.94) <br>dataStorageExceeded;Database storage exceeds the limit specified in license<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>dataStorageNormal (1.3.6.1.4.1.5951.7.1.2.95) <br>dataStorageNormal;Database storage is within the limit allowed by license.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>sslCertThresholdBreached (1.3.6.1.4.1.5951.7.1.2.96) <br>sslCertThresholdBreached;Certificate expiry<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>sslCertThresholdNormal (1.3.6.1.4.1.5951.7.1.2.97) <br>sslCertThresholdNormal<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haFailover (1.3.6.1.4.1.5951.7.1.2.98) <br>HA Failover happened.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haNoHeartBeats (1.3.6.1.4.1.5951.7.1.2.99) <br>No Heartbeats from peer.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haDatabaseOutOfSync (1.3.6.1.4.1.5951.7.1.2.100) <br>HA nodes database out of sync<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>inventoryUp (1.3.6.1.4.1.5951.7.1.2.101) <br>Inventory has returned to normal condition<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deviceBooted (1.3.6.1.4.1.5951.7.1.2.104) <br>A managed device has failed to start<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deviceRebooted (1.3.6.1.4.1.5951.7.1.2.105) <br>A managed device has failed to restart<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>autoScaleGroupAdded (1.3.6.1.4.1.5951.7.1.2.106) <br>AutoScaleGroup Added<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>autoScaleGroupModified (1.3.6.1.4.1.5951.7.1.2.107) <br>AutoScaleGroup Modified<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>autoScaleGroupDeleted (1.3.6.1.4.1.5951.7.1.2.108) <br>AutoScaleGroup Deleted<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>clusterProvisionStatus (1.3.6.1.4.1.5951.7.1.2.109) <br>AutoScaleGroup: Cluster Provision Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>nodeProvisionStatus (1.3.6.1.4.1.5951.7.1.2.110) <br>AutoScaleGroup: Node Provision Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>coolDownPeriodStatus (1.3.6.1.4.1.5951.7.1.2.111) <br>AutoScaleGroup: Cool Down Period Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>clusterDeprovisionStatus (1.3.6.1.4.1.5951.7.1.2.112) <br>AutoScaleGroup: Cluster Deprovision Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>nodeDeprovisionStatus (1.3.6.1.4.1.5951.7.1.2.113) <br>AutoScaleGroup: Node Deprovision Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>drainConnPeriodStatus (1.3.6.1.4.1.5951.7.1.2.114) <br>AutoScaleGroup: Drain Connection Period Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deployAppStatus (1.3.6.1.4.1.5951.7.1.2.115) <br>AutoScaleGroup: Deploy application status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>modifyAppStatus (1.3.6.1.4.1.5951.7.1.2.116) <br>AutoScaleGroup: Modify application status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deleteAppStatus (1.3.6.1.4.1.5951.7.1.2.117) <br>AutoScaleGroup: Delete application status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>ipLimitReached (1.3.6.1.4.1.5951.7.1.2.118) <br>AutoScaleGroup: IP Limit Reached<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>scaleOutStatus (1.3.6.1.4.1.5951.7.1.2.119) <br>AutoScaleGroup: Scale Out Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>scaleInStatus (1.3.6.1.4.1.5951.7.1.2.120) <br>AutoScaleGroup: Scale In Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>addIPSetStatus (1.3.6.1.4.1.5951.7.1.2.121) <br>AutoScaleGroup: IPSet creation status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deleteIPSetStatus (1.3.6.1.4.1.5951.7.1.2.122) <br>AutoScaleGroup: IPSet deletion status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>addZone (1.3.6.1.4.1.5951.7.1.2.123) <br>AutoScaleGroup: Add Zone status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deleteZone (1.3.6.1.4.1.5951.7.1.2.124) <br>AutoScaleGroup: Delete Zone status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>addRecord (1.3.6.1.4.1.5951.7.1.2.125) <br>AutoScaleGroup: Add record status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deleteRecord (1.3.6.1.4.1.5951.7.1.2.126) <br>AutoScaleGroup: Add record status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>addRRData (1.3.6.1.4.1.5951.7.1.2.127) <br>AutoScaleGroup: Add rrdata status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deleteRRData (1.3.6.1.4.1.5951.7.1.2.128) <br>AutoScaleGroup: delete rrdata status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>instancePolicyReconfigurationFailed (1.3.6.1.4.1.5951.7.1.2.131) <br>Reconfiguration of policies failed on an instance<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>instancePolicyReconfigurationSucceeded (1.3.6.1.4.1.5951.7.1.2.132) <br>Reconfiguration of policies succeeded on an instance<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>autoscalegroupUpgrade (1.3.6.1.4.1.5951.7.1.2.133) <br>AutoScaleGroup: Upgrade AutoScaleGroup<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>licensePoolExpiryWarning (1.3.6.1.4.1.5951.7.1.2.134) <br>LicensePoolExpiryWarning: Pool license expiry Warning based on days to expire<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>licensePoolExpiryNormal (1.3.6.1.4.1.5951.7.1.2.135) <br>LicensePoolExpiryNormal: Pool license expiry normal based on days to expire<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haSplitBrainRecovered (1.3.6.1.4.1.5951.7.1.2.136) <br>HA Split Brain Recovered.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haNormalHeartBeats (1.3.6.1.4.1.5951.7.1.2.137) <br>Normal Heartbeats from peer.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haDatabaseInSync (1.3.6.1.4.1.5951.7.1.2.138) <br>HA nodes database in sync<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haSplitBrainDiscovered (1.3.6.1.4.1.5951.7.1.2.139) <br>HA Split Brain Discovered.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>rlCPUBreach (1.3.6.1.4.1.5951.7.1.2.140) <br>RL_CPU has Breached.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>rlPPSBreach (1.3.6.1.4.1.5951.7.1.2.141) <br>RL_PPS has Breached.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>rlRateBreach (1.3.6.1.4.1.5951.7.1.2.142) <br>RL_RATE has Breached.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>rlSSLThroughputBreach (1.3.6.1.4.1.5951.7.1.2.143) <br>RL_SSL_THROUGHPUT has Breached.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>rlSSLTPSBreach (1.3.6.1.4.1.5951.7.1.2.144) <br>RL_SSL_TPS has Breached.<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>clusterShutdownStatus (1.3.6.1.4.1.5951.7.1.2.152) <br>AutoScaleGroup: Cluster Shutdown Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>clusterBootupStatus (1.3.6.1.4.1.5951.7.1.2.153) <br>AutoScaleGroup: Cluster Bootup Status<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haNodesVersionMisMatch (1.3.6.1.4.1.5951.7.1.2.154) <br>This trap is sent when version mismatch is detected between NetScaler Console HA nodes<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>haNodesVersionIsMatched (1.3.6.1.4.1.5951.7.1.2.155) <br>Version is same on both the NetScaler Console HA nodes<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>deviceStateCleared (1.3.6.1.4.1.5951.7.1.2.156) <br>Instance state of a managed device has changed to Up<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br>TelemetryAutoUpload (1.3.6.1.4.1.5951.7.1.2.160) <br>Telemetry Upload is unsucessful<br>Varbinds sent in the trap message - <a href="#source">source</a>, <a href="#entityName">entityName</a>, <a href="#eventMessage">eventMessage</a>, <a href="#severity">severity</a><br><br><hr width="100%%"><a name="NetScaler Console OIDs"><h3>NetScaler Console OIDs</h3></a><br><br><b><a name="masEventGroup">masEventGroup(1.3.6.1.4.1.5951.7.1)</a></b><br>
+
+masEventGroup Description.<br>
+<br><b><a name="systemGroup">systemGroup(1.3.6.1.4.1.5951.7.2)</a></b><br>
+
+systemGroup Description.<br>
+<br><a name="systemPlatform">systemPlatform(1.3.6.1.4.1.5951.7.2.1)</a><br>
+Platform<br>
+
+<br><a name="systemProduct">systemProduct(1.3.6.1.4.1.5951.7.2.2)</a><br>
+Product Name<br>
+
+<br><a name="systemBuildNumber">systemBuildNumber(1.3.6.1.4.1.5951.7.2.3)</a><br>
+Build Number<br>
+
+<br><a name="systemIPAddress_type">systemIPAddressType(1.3.6.1.4.1.5951.7.2.4)</a><br>
+Type of systemIPAddress<br>
+<br><a name="systemIPAddress">systemIPAddress(1.3.6.1.4.1.5951.7.2.5)</a><br>
+IP Address<br>
+
+<br><a name="systemNetmask_type">systemNetmaskType(1.3.6.1.4.1.5951.7.2.6)</a><br>
+Type of systemNetmask<br>
+<br><a name="systemNetmask">systemNetmask(1.3.6.1.4.1.5951.7.2.7)</a><br>
+Netmask<br>
+
+<br><a name="systemGateway_type">systemGatewayType(1.3.6.1.4.1.5951.7.2.8)</a><br>
+Type of systemGateway<br>
+<br><a name="systemGateway">systemGateway(1.3.6.1.4.1.5951.7.2.9)</a><br>
+Gateway <br>
+
+<br><a name="systemDns_type">systemDnsType(1.3.6.1.4.1.5951.7.2.10)</a><br>
+Type of systemDns<br>
+<br><a name="systemDns">systemDns(1.3.6.1.4.1.5951.7.2.11)</a><br>
+DNS Server<br>
+
+<br><a name="systemSysId">systemSysId(1.3.6.1.4.1.5951.7.2.12)</a><br>
+System Id<br>
+
+<br><a name="systemSerial">systemSerial(1.3.6.1.4.1.5951.7.2.13)</a><br>
+Serial Number<br>
+
+<br><a name="systemCurrentTime">systemCurrentTime(1.3.6.1.4.1.5951.7.2.14)</a><br>
+Current Time<br>
+
+<br><a name="systemUptime">systemUptime(1.3.6.1.4.1.5951.7.2.15)</a><br>
+Uptime<br>
+
+<br><a name="systemBiosVersion">systemBiosVersion(1.3.6.1.4.1.5951.7.2.16)</a><br>
+BIOS Version<br>
+
+<br><a name="systemCustomID">systemCustomID(1.3.6.1.4.1.5951.7.2.17)</a><br>
+Custom identification number for appliance<br>
+
+<br><a name="systemCpuUsage">systemCpuUsage(1.3.6.1.4.1.5951.7.2.18)</a><br>
+CPU Usage (%)<br>
+
+<br><a name="systemMemoryUsage">systemMemoryUsage(1.3.6.1.4.1.5951.7.2.19)</a><br>
+Memory Usage (%)<br>
+
+<br><a name="systemDiskUsage">systemDiskUsage(1.3.6.1.4.1.5951.7.2.20)</a><br>
+Disk Usage (%)<br>
+
+<br><b><a name="deviceGroup">deviceGroup(1.3.6.1.4.1.5951.7.3)</a></b><br>
+
+deviceGroup Description.<br>
+<b><br><a name="netscalerTable">netscalerTable(1.3.6.1.4.1.5951.7.3.2)</a></b><br>
+
+<b>This Table contains information aboutnetscaler</b><br>
+This is indexed on the 
+<b><a href="#nsIpAddressType">nsIpAddressType</a></b>, <b><a href="#nsIpAddress">nsIpAddress</a></b>, <b><a href="#nsHostIPAddressType">nsHostIPAddressType</a></b>, <b><a href="#nsHostIPAddress">nsHostIPAddress</a></b>.<br>
+<br><a name="nsIpAddress_type">nsIpAddressType(1.3.6.1.4.1.5951.7.3.2.1.1)</a><br>
+Type of nsIpAddress<br>
+<br><a name="nsIpAddress">nsIpAddress(1.3.6.1.4.1.5951.7.3.2.1.2)</a><br>
+IP Address for this managed device<br>
+
+<br><a name="nsHostIPAddress_type">nsHostIPAddressType(1.3.6.1.4.1.5951.7.3.2.1.3)</a><br>
+Type of nsHostIPAddress<br>
+<br><a name="nsHostIPAddress">nsHostIPAddress(1.3.6.1.4.1.5951.7.3.2.1.4)</a><br>
+Host IPAddress where VM is provisioned<br>
+
+<br><a name="nsProfileName">nsProfileName(1.3.6.1.4.1.5951.7.3.2.1.5)</a><br>
+Device Profile Name that is attached with this managed device<br>
+
+<br><a name="nsName">nsName(1.3.6.1.4.1.5951.7.3.2.1.6)</a><br>
+Name of managed device<br>
+
+<br><a name="nsNetmask_type">nsNetmaskType(1.3.6.1.4.1.5951.7.3.2.1.7)</a><br>
+Type of nsNetmask<br>
+<br><a name="nsNetmask">nsNetmask(1.3.6.1.4.1.5951.7.3.2.1.8)</a><br>
+Netmask of managed device<br>
+
+<br><a name="nsGateway_type">nsGatewayType(1.3.6.1.4.1.5951.7.3.2.1.9)</a><br>
+Type of nsGateway<br>
+<br><a name="nsGateway">nsGateway(1.3.6.1.4.1.5951.7.3.2.1.10)</a><br>
+Default Gateway of managed device<br>
+
+<br><a name="nsHostname">nsHostname(1.3.6.1.4.1.5951.7.3.2.1.11)</a><br>
+Assign hostname to managed device, if this is not provided, name will be set as host name <br>
+
+<br><a name="nsDescription">nsDescription(1.3.6.1.4.1.5951.7.3.2.1.12)</a><br>
+Description of managed device<br>
+
+<br><a name="nsVersion">nsVersion(1.3.6.1.4.1.5951.7.3.2.1.13)</a><br>
+Device Version<br>
+
+<br><a name="nsUuid">nsUuid(1.3.6.1.4.1.5951.7.3.2.1.14)</a><br>
+UUID of VM Instance generated by Hypervisor<br>
+
+<br><a name="nsInstanceState">nsInstanceState(1.3.6.1.4.1.5951.7.3.2.1.15)</a><br>
+State of device, UP only if device accessible<br>
+
+<br><a name="nsVirtualFunctions">nsVirtualFunctions(1.3.6.1.4.1.5951.7.3.2.1.16)</a><br>
+Virtual Functions assigned to VM Instance depending on SDX platform<br>
+
+<br><a name="nsSslVirtualFunctions">nsSslVirtualFunctions(1.3.6.1.4.1.5951.7.3.2.1.17)</a><br>
+SSL Virtual Functions assigned to VM Instance<br>
+
+<br><a name="nsVmState">nsVmState(1.3.6.1.4.1.5951.7.3.2.1.18)</a><br>
+State of Virtual Machine (Running | Halted)<br>
+
+<br><a name="nsNumberOfCPU">nsNumberOfCPU(1.3.6.1.4.1.5951.7.3.2.1.19)</a><br>
+Number of CPU that is assigned to VM Instance<br>
+
+<br><a name="nsVmMemoryTotal">nsVmMemoryTotal(1.3.6.1.4.1.5951.7.3.2.1.21)</a><br>
+Total Memory of VM Instance in MB. 2048MB, 5120MB<br>
+
+<br><a name="nsUptime">nsUptime(1.3.6.1.4.1.5951.7.3.2.1.26)</a><br>
+Uptime of device<br>
+
+<br><a name="nsNumberOfSSLCores">nsNumberOfSSLCores(1.3.6.1.4.1.5951.7.3.2.1.27)</a><br>
+Assign number of ssl virtual functions to VM Instance<br>
+
+<br><a name="nsCpuCoreMgmt">nsCpuCoreMgmt(1.3.6.1.4.1.5951.7.3.2.1.28)</a><br>
+Management CPU cores assigned to VM Instance<br>
+
+<br><a name="nsCpuCorePE">nsCpuCorePE(1.3.6.1.4.1.5951.7.3.2.1.29)</a><br>
+Packet Engine cores assigned to VM Instance<br>
+
+<br><a name="nsVmDescription">nsVmDescription(1.3.6.1.4.1.5951.7.3.2.1.30)</a><br>
+Description of the VM instance<br>
+
+<br><a name="nsThroughput">nsThroughput(1.3.6.1.4.1.5951.7.3.2.1.31)</a><br>
+Assign throughput in Mbps to VM Instance<br>
+
+<br><a name="nsNumberOfCores">nsNumberOfCores(1.3.6.1.4.1.5951.7.3.2.1.32)</a><br>
+Number of cores that are assigned to VM Instance<br>
+
+<br><a name="nsNsCPUUsage">nsNsCPUUsage(1.3.6.1.4.1.5951.7.3.2.1.33)</a><br>
+CPU Usage (%) of NetScaler Instance<br>
+
+<br><a name="nsNsMemoryUsage">nsNsMemoryUsage(1.3.6.1.4.1.5951.7.3.2.1.35)</a><br>
+Memory Usage (%)<br>
+
+<br><a name="nsNsTx">nsNsTx(1.3.6.1.4.1.5951.7.3.2.1.36)</a><br>
+Out Throughput of NetScaler Instance in Mbps<br>
+
+<br><a name="nsNsRx">nsNsRx(1.3.6.1.4.1.5951.7.3.2.1.37)</a><br>
+In Throughput of NetScaler Instance in Mbps<br>
+
+<br><a name="nsHttpReq">nsHttpReq(1.3.6.1.4.1.5951.7.3.2.1.38)</a><br>
+HTTP Requests/second<br>
+
+<br><a name="nsUpsince">nsUpsince(1.3.6.1.4.1.5951.7.3.2.1.39)</a><br>
+Upsince of managed device<br>
+
+<br><a name="nsLicense">nsLicense(1.3.6.1.4.1.5951.7.3.2.1.40)</a><br>
+Feature License for NetScaler Instance, needs to be set while provisioning (standard, enterprise, platinum)<br>
+
+<br><a name="nsHaMasterState">nsHaMasterState(1.3.6.1.4.1.5951.7.3.2.1.41)</a><br>
+Master State (Primary/Secondary)<br>
+
+<br><a name="nsHaIPAddress_type">nsHaIPAddressType(1.3.6.1.4.1.5951.7.3.2.1.42)</a><br>
+Type of nsHaIPAddress<br>
+<br><a name="nsHaIPAddress">nsHaIPAddress(1.3.6.1.4.1.5951.7.3.2.1.43)</a><br>
+Peer IP Address<br>
+
+<br><a name="nsNodeState">nsNodeState(1.3.6.1.4.1.5951.7.3.2.1.44)</a><br>
+Node State of NetScaler Instance<br>
+
+<br><a name="nsHaSync">nsHaSync(1.3.6.1.4.1.5951.7.3.2.1.45)</a><br>
+HA Synchronization State<br>
+
+<br><a name="nsPps">nsPps(1.3.6.1.4.1.5951.7.3.2.1.46)</a><br>
+Assign packets per seconds to NetScaler Instance<br>
+
+<br><a name="nsNumberOfSslCoresUp">nsNumberOfSslCoresUp(1.3.6.1.4.1.5951.7.3.2.1.47)</a><br>
+Number of SSL Cores Up<br>
+
+<br><a name="nsIfOby1">nsIfOby1(1.3.6.1.4.1.5951.7.3.2.1.48)</a><br>
+Network 0/1 on VM Instance<br>
+
+<br><a name="nsIf0by2">nsIf0by2(1.3.6.1.4.1.5951.7.3.2.1.49)</a><br>
+Network 0/2 on VM Instance<br>
+
+<br><a name="nsNsVLANId">nsNsVLANId(1.3.6.1.4.1.5951.7.3.2.1.50)</a><br>
+VLAN Id<br>
+
+<br><a name="nsNsVLANTagged">nsNsVLANTagged(1.3.6.1.4.1.5951.7.3.2.1.51)</a><br>
+NSVLAN Tagged<br>
+
+<br><a name="nsVlanType">nsVlanType(1.3.6.1.4.1.5951.7.3.2.1.52)</a><br>
+VLAN Type, NetScaler or L2 VLAN<br>
+
+<br><a name="eventVarBindOids"><b>eventVarBindOids(1.3.6.1.4.1.5951.7.1.1) </b></a><br>This is the group of SNMP trap variable bindings<br><br><a name="source">source (1.3.6.1.4.1.5951.7.1.1.1)</a><br>IP address of the device generating the event<br><br><a name="entityName">entityName (1.3.6.1.4.1.5951.7.1.1.2)</a><br>Name of the entity associated with this alarm<br><br><a name="entityType">entityType (1.3.6.1.4.1.5951.7.1.1.3)</a><br>Type of entity associated with this alarm<br><br><a name="eventMessage">eventMessage (1.3.6.1.4.1.5951.7.1.1.4)</a><br>Message associated with this alarm<br><br><a name="thresholdValue">thresholdValue (1.3.6.1.4.1.5951.7.1.1.5)</a><br>High threshold value configured for this alarm<br><br><a name="currentValue">currentValue (1.3.6.1.4.1.5951.7.1.1.6)</a><br>Current value of the entity when high or normal threshold trap is sent<br><br><a name="severity">severity (1.3.6.1.4.1.5951.7.1.1.7)</a><br>Severity associated with this alarm<hr width="100%">
+</body>
+</html>
