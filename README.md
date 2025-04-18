@@ -14,9 +14,9 @@ To monitor this joint solution, this monitoring template allows you to quickly c
 
 For more flexibility, there are two independent templates that include two monitoring methods, one for passive data collection via SNMP and another for active SNMP _Trap_ capture. This way of organizing both methods simplifies the management of monitored items.
 
-- [⬇️ `Citrix ADC NetScaler by SNMP`](#template-citrix-adc-netscaler-by-snmp)
+- ⬇️ [`Citrix ADC NetScaler by SNMP`](#template-citrix-adc-netscaler-by-snmp)
     - Focus on general NetScaler passive monitoring using SNMP
-- [⬇️ `Citrix ADC NetScaler Traps by SNMP`](#template-citrix-adc-netscaler-traps-by-snmp)
+- ⬇️ [`Citrix ADC NetScaler Traps by SNMP`](#template-citrix-adc-netscaler-traps-by-snmp)
     - Focus on general NetScaler active monitoring using SNMP Traps
 
 <BR>
@@ -137,8 +137,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 
 > **Discovers NetScaler device interfaces from standard IF-MIB**
 
-<BR>
-
 #### ITEM PROTOTYPES
 
 | Name                                                                       | Description |
@@ -168,8 +166,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 
 > **Discovers system partitions**
 
-<BR>
-
 #### ITEM PROTOTYPES
 
 | Name                                           | Description |
@@ -193,8 +189,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 
 > **Discovers system fans**
 
-<BR>
-
 #### ITEM PROTOTYPES
 
 | Name                        | Description |
@@ -206,8 +200,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 ### ➡️ DISCOVERY RULE `Discovery System Health Temperature`
 
 > **Discovers system temperature sensors**
-
-<BR>
 
 #### ITEM PROTOTYPES
 
@@ -229,8 +221,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 
 > **Discovers system voltage sensors**
 
-<BR>
-
 #### ITEM PROTOTYPES
 
 | Name                            | Description |
@@ -242,8 +232,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 ### ➡️ DISCOVERY RULE `Discovery vServer Health`
 
 > **Discover vServer names for health data**
-
-<BR>
 
 #### ITEM PROTOTYPES
 
@@ -258,8 +246,6 @@ Depending on the size of the environment, a Zabbix network discovery can help to
 ### ➡️ DISCOVERY RULE `Discovery vServer Requests`
 
 > **Discovers vServer names for statistics data**
-
-<BR>
 
 #### ITEM PROTOTYPES
 
