@@ -14,9 +14,9 @@ To monitor this joint solution, this monitoring template allows you to quickly c
 
 For more flexibility, there are two independent templates that include two monitoring methods, one for passive data collection via SNMP and another for active SNMP _Trap_ capture. This way of organizing both methods simplifies the management of monitored items.
 
-- [`Citrix ADC NetScaler by SNMP`](#template-citrix-adc-netscaler-by-snmp)
+- [⬇️ `Citrix ADC NetScaler by SNMP`](#template-citrix-adc-netscaler-by-snmp)
     - Focus on general NetScaler passive monitoring using SNMP
-- [`Citrix ADC NetScaler Traps by SNMP`](#template-citrix-adc-netscaler-traps-by-snmp)
+- [⬇️ `Citrix ADC NetScaler Traps by SNMP`](#template-citrix-adc-netscaler-traps-by-snmp)
     - Focus on general NetScaler active monitoring using SNMP Traps
 
 <BR>
