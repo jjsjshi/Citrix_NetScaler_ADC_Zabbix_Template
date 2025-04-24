@@ -1043,11 +1043,11 @@ zabbix_export:
               recovery_expression: |
                 max(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifInErrors[{#NS.IF.NAME}],5m)
                 <=
-                {$NS.IF.DROP.WARN:"{#NS.IF.NAME}"}*0.8
+                {$NS.IF.ERROR.WARN:"{#NS.IF.NAME}"}*0.8
                 and
                 max(/BB Citrix NetScaler ADC by SNMP/netscaler.if.ifOutErrors[{#NS.IF.NAME}],5m)
                 <=
-                {$NS.IF.DROP.WARN:"{#NS.IF.NAME}"}*0.8
+                {$NS.IF.ERROR.WARN:"{#NS.IF.NAME}"}*0.8
               name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - High error rate'
               event_name: 'Interface {#NS.IF.NAME}({#NS.IF.ALIAS}) - High Drop Rate (higher than {$NS.IF.ERROR.WARN:"{#NS.IF.NAME}"} for 5m)'
               opdata: 'Errors in: {ITEM.LASTVALUE1} - Erros out: {ITEM.LASTVALUE2}'
